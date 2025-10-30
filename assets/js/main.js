@@ -23,6 +23,53 @@ if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
+// Language selector functionality
+const langToggle = document.getElementById('langToggle');
+if (langToggle) {
+  const langText = langToggle.querySelector('.lang-text');
+  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+  
+  // Set initial language display
+  if (langText) langText.textContent = currentLang;
+  
+  langToggle.addEventListener('click', () => {
+    // Toggle between EN and AR
+    currentLang = currentLang === 'EN' ? 'AR' : 'EN';
+    if (langText) langText.textContent = currentLang;
+    localStorage.setItem('preferredLanguage', currentLang);
+    
+    // Apply RTL for Arabic (future enhancement)
+    if (currentLang === 'AR') {
+      document.documentElement.setAttribute('dir', 'rtl');
+      document.documentElement.setAttribute('lang', 'ar');
+      // Show message that Arabic translation is coming soon
+      showLanguageMessage('Arabic version coming soon. Thank you for your patience.');
+    } else {
+      document.documentElement.setAttribute('dir', 'ltr');
+      document.documentElement.setAttribute('lang', 'en');
+    }
+  });
+}
+
+// Helper function to show language switch message
+function showLanguageMessage(message) {
+  const existingMsg = document.querySelector('.lang-message');
+  if (existingMsg) existingMsg.remove();
+  
+  const msgDiv = document.createElement('div');
+  msgDiv.className = 'lang-message';
+  msgDiv.textContent = message;
+  msgDiv.style.cssText = 'position: fixed; top: 100px; left: 50%; transform: translateX(-50%); background: var(--brand); color: white; padding: 16px 32px; border-radius: 12px; box-shadow: 0 8px 24px rgba(14,74,60,.3); z-index: 1000; animation: fadeInUp 0.4s ease-out; font-weight: 600;';
+  document.body.appendChild(msgDiv);
+  
+  setTimeout(() => {
+    msgDiv.style.opacity = '0';
+    msgDiv.style.transform = 'translateX(-50%) translateY(-20px)';
+    msgDiv.style.transition = 'all 0.4s ease';
+    setTimeout(() => msgDiv.remove(), 400);
+  }, 3000);
+}
+
 // Enhanced header on scroll
 const header = document.querySelector('.site-header');
 const backToTopBtn = document.getElementById('backToTop');
@@ -252,5 +299,36 @@ if (backToTopBtn) {
   if (controls) controls.style.display = slides.length > 1 ? '' : 'none';
   if (dots) dots.style.display = slides.length > 1 ? '' : 'none';
 })();
+
+// Video mute toggle functionality
+const extractionVideo = document.getElementById('extractionVideo');
+const muteToggle = document.getElementById('muteToggle');
+
+if (extractionVideo && muteToggle) {
+  muteToggle.addEventListener('click', () => {
+    extractionVideo.muted = !extractionVideo.muted;
+    const icon = muteToggle.querySelector('.mute-icon');
+    const text = muteToggle.querySelector('.mute-text');
+    
+    if (extractionVideo.muted) {
+      icon.textContent = '🔇';
+      text.textContent = 'Sound Off';
+    } else {
+      icon.textContent = '🔊';
+      text.textContent = 'Sound On';
+    }
+  });
+  
+  // Hover effect for mute button
+  muteToggle.addEventListener('mouseenter', () => {
+    muteToggle.style.background = 'rgba(255,255,255,0.3)';
+    muteToggle.style.transform = 'scale(1.05)';
+  });
+  
+  muteToggle.addEventListener('mouseleave', () => {
+    muteToggle.style.background = 'rgba(255,255,255,0.2)';
+    muteToggle.style.transform = 'scale(1)';
+  });
+}
 
 

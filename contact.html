@@ -14,31 +14,40 @@
       <a class="logo" href="index.html">
         <img src="logo.png" alt="Granix Prime Stones" class="logo-img">
       </a>
-      <nav class="site-nav" aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
-        <ul id="nav-menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="applications.html">Applications</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html" aria-current="page">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="header-controls">
+        <div class="language-selector">
+          <button id="langToggle" class="lang-btn" aria-label="Switch language">
+            <span class="lang-icon">🌐</span>
+            <span class="lang-text">EN</span>
+          </button>
+        </div>
+        <nav class="site-nav" aria-label="Primary">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+          <ul id="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="applications.html">Applications</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html" aria-current="page">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
   <main id="main" class="site-main container">
-    <h1>Begin Your Project Consultation</h1>
-    <p>Share your vision with our stone curators. Whether you're designing an iconic commercial space or a timeless residence, we're here to guide you to the perfect selection.</p>
+    <h1>Request Your Complimentary Slab Consultation</h1>
+    <p style="max-width: 800px; margin: 0 auto 32px; font-size: 1.1rem; line-height: 1.7; color: var(--muted);">Share your vision with our stone curators. Whether you're designing an iconic commercial space or a timeless residence, we're here to guide you to the perfect selection. Connect with us from anywhere in the world.</p>
     <div class="cards" style="margin-bottom:18px;">
       <article class="card">
         <h2>Granix Prime Stones Ltd</h2>
         <p>
           Kampala, Uganda<br>
-          <a href="tel:+256708331185">+256 708 331 185</a><br>
-          <a href="tel:+971581968890">+971 58 196 8890</a><br>
-          <a href="mailto:granixprimestonesltd25@gmail.com">granixprimestonesltd25@gmail.com</a>
+          <strong style="color: var(--brand); font-size: 0.9rem; display: block; margin-top: 12px;">International Contact:</strong>
+          <a href="tel:+971581968890" style="font-size: 1.05rem;">+971 58 196 8890</a> (UAE/International)<br>
+          <a href="tel:+256708331185" style="font-size: 1.05rem;">+256 708 331 185</a> (East Africa)<br><br>
+          <a href="mailto:granixprimestonesltd25@gmail.com" style="color: var(--accent-600);">granixprimestonesltd25@gmail.com</a>
         </p>
       </article>
     </div>
@@ -58,7 +67,7 @@
         <textarea name="message" rows="6" placeholder="Project details" required></textarea>
       </label>
       <div class="cta-group">
-        <button class="btn btn-primary" type="submit">Submit Inquiry</button>
+        <button class="btn btn-primary" type="submit">Submit Your Consultation Request</button>
       </div>
       <input type="hidden" name="_subject" value="New inquiry from Granix website">
       <input type="hidden" name="_captcha" value="false">

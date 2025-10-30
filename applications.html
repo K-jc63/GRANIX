@@ -17,17 +17,25 @@
       <a class="logo" href="index.html">
         <img src="logo.png" alt="Granix Prime Stones" class="logo-img">
       </a>
-      <nav class="site-nav" aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
-        <ul id="nav-menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="applications.html" aria-current="page">Applications</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="header-controls">
+        <div class="language-selector">
+          <button id="langToggle" class="lang-btn" aria-label="Switch language">
+            <span class="lang-icon">🌐</span>
+            <span class="lang-text">EN</span>
+          </button>
+        </div>
+        <nav class="site-nav" aria-label="Primary">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+          <ul id="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="applications.html" aria-current="page">Applications</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -45,7 +53,38 @@
         <p style="font-size: 1.1rem; color: var(--muted); line-height: 1.7;">From elegant residential spaces to iconic commercial landmarks, our curated stones bring timeless beauty and uncompromising performance to projects that define skylines across continents.</p>
       </div>
 
-      <div class="application-categories">
+      <!-- Stone Extraction Process Video -->
+      <div class="video-showcase" style="max-width: 900px; margin: 0 auto 64px;">
+        <div style="text-align: center; margin-bottom: 24px;">
+          <h2 style="margin: 0 0 12px; font-size: clamp(1.8rem, 4vw, 2.3rem); color: var(--brand-600);">From Quarry to Masterpiece</h2>
+          <p style="font-size: 1.05rem; color: var(--muted); margin: 0;">Witness the journey of natural stone from deep within the earth to architectural excellence</p>
+        </div>
+        <div class="video-container" style="position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,.15); background: #000;">
+          <video 
+            id="extractionVideo"
+            class="showcase-video" 
+            autoplay 
+            muted 
+            loop 
+            playsinline
+            style="width: 100%; height: auto; display: block;"
+            poster="">
+            <source src="extraction.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+          <div class="video-overlay" style="position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.7), transparent); padding: 20px; color: white; display: flex; align-items: center; justify-content: space-between;">
+            <div>
+              <p style="margin: 0; font-weight: 600; font-size: 1.1rem;">Stone Extraction Process</p>
+              <p style="margin: 4px 0 0; font-size: 0.9rem; opacity: 0.9;">Curating nature's masterpieces with precision and care</p>
+            </div>
+            <button id="muteToggle" class="mute-btn" style="background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: 600; backdrop-filter: blur(10px); transition: all 0.3s ease;" aria-label="Toggle sound">
+              <span class="mute-icon">🔇</span> <span class="mute-text">Sound Off</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="application-categories" style="margin-top: 48px;">
         <article class="application-category" id="residential">
           <div class="category-header">
             <h2>Residential Applications</h2>

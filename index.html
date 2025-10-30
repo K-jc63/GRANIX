@@ -24,7 +24,7 @@
     "url": "https://granixprimestones.com",
     "logo": "https://granixprimestones.com/logo.png",
     "image": "https://granixprimestones.com/assets/img/og-placeholder.svg",
-    "telephone": "+256708331185",
+    "telephone": "+971-XX-XXX-XXXX | +256-708-331-185",
     "email": "granixprimestonesltd25@gmail.com",
     "address": {
       "@type": "PostalAddress",
@@ -62,17 +62,25 @@
       <a class="logo" href="index.html">
         <img src="logo.png" alt="Granix Prime Stones" class="logo-img">
       </a>
-      <nav class="site-nav" aria-label="Primary">
-        <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
-        <ul id="nav-menu">
-          <li><a href="index.html" aria-current="page">Home</a></li>
-          <li><a href="about.html">About</a></li>
-          <li><a href="products.html">Products</a></li>
-          <li><a href="applications.html">Applications</a></li>
-          <li><a href="gallery.html">Gallery</a></li>
-          <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </nav>
+      <div class="header-controls">
+        <div class="language-selector">
+          <button id="langToggle" class="lang-btn" aria-label="Switch language">
+            <span class="lang-icon">🌐</span>
+            <span class="lang-text">EN</span>
+          </button>
+        </div>
+        <nav class="site-nav" aria-label="Primary">
+          <button class="nav-toggle" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+          <ul id="nav-menu">
+            <li><a href="index.html" aria-current="page">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="applications.html">Applications</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -80,12 +88,11 @@
     <section class="hero theme-granite">
       <div class="container">
         <p class="hero-tagline" style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 2px; color: var(--accent); margin: 0 0 12px; font-weight: 600;">The Foundation of Grandeur</p>
-        <h1>The Earth's Rarest Stone.<br>Curated for Iconic Architecture.</h1>
-        <p class="hero-subtitle" style="font-size: clamp(1.15rem, 2.5vw, 1.35rem); margin: 16px auto 28px; max-width: 750px; font-weight: 500; color: #334155;">Where Nature's Patience Meets Human Vision</p>
-        <p style="max-width: 850px; margin: 0 auto 32px; line-height: 1.8; font-size: 1.05rem;">For centuries, the Earth has been perfecting its art. Deep within its core, under immense pressure and time, it has created masterpieces of unparalleled strength and beauty. Granix exists with one purpose: to bring these rare natural masterpieces to the world's most visionary projects.</p>
+        <h1>Granix Prime Stones: The Foundation of the World's Most Ambitious Architecture.</h1>
+        <p class="hero-subtitle mission-statement" style="font-size: clamp(1.15rem, 2.5vw, 1.35rem); margin: 16px auto 28px; max-width: 850px; font-weight: 500; color: #334155; line-height: 1.7;">We ethically source the planet's most resilient and breathtaking natural stone, empowering visionaries to create spaces that inspire and endure.</p>
         <div class="cta-group">
-          <a class="btn btn-primary" href="contact.html">Begin Your Project Consultation</a>
-          <a class="btn" href="gallery.html">View The Granix Portfolio</a>
+          <a class="btn btn-primary" href="contact.html">Request Your Complimentary Slab Consultation</a>
+          <a class="btn" href="gallery.html">View Our Exclusive Portfolio</a>
         </div>
       </div>
     </section>
@@ -158,25 +165,59 @@
 
     <section class="granix-difference container section" style="padding: 72px 0;">
       <div style="text-align: center; max-width: 900px; margin: 0 auto 56px;">
-        <h2 class="section-title" style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 16px;">The Granix Difference</h2>
-        <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7;">We are global curators of character. Our team journeys to the world's most remote and revered quarries, selecting only the most extraordinary stone—each slab a unique narrative of geological history.</p>
+        <h2 class="section-title" style="font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 16px;">Why Natural Stone? The Granix Difference</h2>
+        <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7;">In a world of artificial alternatives, we champion the authentic. Here's why the world's most iconic projects choose natural stone—and why they choose Granix.</p>
       </div>
-      <div class="difference-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px;">
-        <article class="difference-card" style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 36px 28px; text-align: center; transition: all 0.4s ease; box-shadow: var(--shadow);">
-          <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2.5rem; color: #fff; box-shadow: 0 8px 24px rgba(14,74,60,.25);">💎</div>
-          <h3 style="margin: 0 0 14px; font-size: 1.4rem; color: var(--brand-600);">Rarity & Uniqueness</h3>
-          <p style="margin: 0; line-height: 1.7; color: var(--muted);">We specialize in the rare and the remarkable. While others mass-produce, we meticulously curate. Every Granix slab is a one-of-a-kind work of art, ensuring your project possesses a character that simply cannot be replicated.</p>
-        </article>
+      <div class="difference-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 32px;">
         <article class="difference-card" style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 36px 28px; text-align: center; transition: all 0.4s ease; box-shadow: var(--shadow);">
           <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2.5rem; color: #fff; box-shadow: 0 8px 24px rgba(14,74,60,.25);">🛡️</div>
-          <h3 style="margin: 0 0 14px; font-size: 1.4rem; color: var(--brand-600);">Uncompromising Performance</h3>
-          <p style="margin: 0; line-height: 1.7; color: var(--muted);">Beauty must be enduring. Our stones are nature's original high-performance material, selected for their innate ability to withstand the planet's most demanding conditions—from the relentless sun of the Gulf to the freeze-thaw cycles of Northern climates.</p>
+          <h3 style="margin: 0 0 14px; font-size: 1.4rem; color: var(--brand-600);">Unmatched Durability</h3>
+          <p style="margin: 0; line-height: 1.7; color: var(--muted);">Nature's original high-performance material, proven in the world's most extreme climates. From Dubai's scorching heat to Nordic winters, our stone endures where synthetics fail.</p>
+        </article>
+        <article class="difference-card" style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 36px 28px; text-align: center; transition: all 0.4s ease; box-shadow: var(--shadow);">
+          <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2.5rem; color: #fff; box-shadow: 0 8px 24px rgba(14,74,60,.25);">💎</div>
+          <h3 style="margin: 0 0 14px; font-size: 1.4rem; color: var(--brand-600);">Unique Character</h3>
+          <p style="margin: 0; line-height: 1.7; color: var(--muted);">No two slabs are alike. Own a one-of-a-kind piece of the earth's history. Each vein, each pattern tells a story millions of years in the making—impossible to replicate.</p>
         </article>
         <article class="difference-card" style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 36px 28px; text-align: center; transition: all 0.4s ease; box-shadow: var(--shadow);">
           <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2.5rem; color: #fff; box-shadow: 0 8px 24px rgba(14,74,60,.25);">🌍</div>
           <h3 style="margin: 0 0 14px; font-size: 1.4rem; color: var(--brand-600);">Ethical Provenance</h3>
-          <p style="margin: 0; line-height: 1.7; color: var(--muted);">True luxury carries a clear conscience. We build traceable, ethical partnerships with our quarries, ensuring respect for both the environment and the people who help bring these natural wonders to light.</p>
+          <p style="margin: 0; line-height: 1.7; color: var(--muted);">Fully traceable, responsibly sourced stone you can be proud of. We partner only with quarries that respect both the earth and the communities that call it home.</p>
         </article>
+        <article class="difference-card" style="background: var(--bg); border: 2px solid var(--border); border-radius: var(--radius); padding: 36px 28px; text-align: center; transition: all 0.4s ease; box-shadow: var(--shadow);">
+          <div style="width: 80px; height: 80px; margin: 0 auto 24px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2.5rem; color: #fff; box-shadow: 0 8px 24px rgba(14,74,60,.25);">📈</div>
+          <h3 style="margin: 0 0 14px; font-size: 1.4rem; color: var(--brand-600);">Long-Term Value</h3>
+          <p style="margin: 0; line-height: 1.7; color: var(--muted);">An investment that adds lasting beauty and value to any project. While artificial materials depreciate, natural stone becomes more distinguished with time.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="our-story-section container section" style="padding: 72px 0; background: linear-gradient(180deg, var(--bg-alt), var(--bg)); border-radius: var(--radius); margin-bottom: 48px;">
+      <div style="max-width: 1000px; margin: 0 auto;">
+        <h2 class="section-title" style="text-align: center; font-size: clamp(2rem, 4vw, 2.8rem); margin-bottom: 48px; color: var(--brand-600);">Our Story: Building Trust Across Continents</h2>
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: center;">
+          <div style="order: 1;">
+            <h3 style="color: var(--brand); font-size: 1.5rem; margin: 0 0 16px;">From Quarry to Masterpiece</h3>
+            <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text); margin-bottom: 20px;">For over 15 years, our team has traveled the globe—from the marble quarries of Carrara to the granite mountains of Brazil—selecting only the most extraordinary stone for the world's most visionary projects.</p>
+            <p style="font-size: 1.05rem; line-height: 1.8; color: var(--text); margin-bottom: 20px;">We don't just supply stone; we curate legacy. Every slab we deliver carries a story of geological wonder, ethical sourcing, and uncompromising quality standards.</p>
+            <div style="margin-top: 32px; padding: 28px; background: var(--bg); border-left: 4px solid var(--accent); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.06);">
+              <p style="margin: 0 0 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700;">Our Promise to You</p>
+              <p style="margin: 0; font-size: 1.05rem; line-height: 1.7; color: var(--text);"><strong>Transparency.</strong> Every stone is traceable to its source.<br><strong>Quality.</strong> Inspected to international standards.<br><strong>Partnership.</strong> We're with you from selection to installation.</p>
+            </div>
+          </div>
+          <div style="order: 2; text-align: center;">
+            <div style="background: linear-gradient(135deg, var(--brand), var(--brand-600)); padding: 48px 32px; border-radius: var(--radius); box-shadow: 0 16px 48px rgba(14,74,60,.25);">
+              <img src="logo.png" alt="Granix Prime Stones - Trusted Globally" style="max-width: 100%; height: auto; max-height: 240px; margin-bottom: 24px; filter: brightness(0) invert(1);">
+              <div style="color: #fff; margin-top: 20px;">
+                <p style="font-size: 2.5rem; font-weight: 700; margin: 0; line-height: 1; color: var(--accent);">15+</p>
+                <p style="margin: 8px 0 0; font-size: 1rem; opacity: 0.95;">Years of Excellence</p>
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,.3); margin: 20px 0;">
+                <p style="font-size: 2.5rem; font-weight: 700; margin: 0; line-height: 1; color: var(--accent);">25+</p>
+                <p style="margin: 8px 0 0; font-size: 1rem; opacity: 0.95;">Countries Served</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
