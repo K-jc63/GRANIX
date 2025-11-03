@@ -47,16 +47,65 @@ if (yearEl) {
 
 // Language selector functionality with full translation support
 const langToggle = document.getElementById('langToggle');
-let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
-let translations = {};
+
+// Initialize language functionality
+function initLanguage() {
+  // Get saved language preference or default to English
+  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+  
+  // Update UI to show current language
+  const langText = langToggle.querySelector('.lang-text');
+  if (langText) langText.textContent = currentLang;
+  
+  // Apply RTL for Arabic if needed
+  if (currentLang === 'AR') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+  }
+  
+  // Load translations for current language
+  loadTranslations(currentLang);
+  
+  // Set up language toggle event listener
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      // Toggle between EN and AR
+      const newLang = currentLang === 'EN' ? 'AR' : 'EN';
+      
+      // Save preference
+      localStorage.setItem('preferredLanguage', newLang);
+      
+      // Update current language
+      currentLang = newLang;
+      
+      // Update UI
+      if (langText) langText.textContent = currentLang;
+      
+      // Apply RTL for Arabic
+      if (currentLang === 'AR') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+      }
+      
+      // Load and apply translations
+      loadTranslations(currentLang);
+    });
+  }
+}
 
 // Load translations
 async function loadTranslations(lang) {
   try {
     const response = await fetch(`lang/${lang.toLowerCase()}.json`);
     if (response.ok) {
-      translations = await response.json();
-      applyTranslations();
+      const translations = await response.json();
+      applyTranslations(translations, lang);
       return true;
     } else {
       console.warn(`Failed to load ${lang} translations:`, response.status);
@@ -68,7 +117,7 @@ async function loadTranslations(lang) {
 }
 
 // Apply translations to the page
-function applyTranslations() {
+function applyTranslations(translations, lang) {
   // Translate navigation
   const navLinks = document.querySelectorAll('.site-nav a');
   if (navLinks.length >= 6) {
@@ -165,69 +214,10 @@ function applyTranslations() {
     }
   }
   
-  // Update language button text
-  const langText = langToggle.querySelector('.lang-text');
-  if (langText) langText.textContent = currentLang;
-  
-  // Apply RTL for Arabic
-  if (currentLang === 'AR') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', 'en');
-  }
-}
-
-// Initialize language functionality
-async function initLanguage() {
-  const langText = langToggle.querySelector('.lang-text');
-  if (langText) langText.textContent = currentLang;
-  
-  // Load translations for current language
-  if (currentLang === 'AR') {
-    const success = await loadTranslations('AR');
-    if (!success) {
-      // Fallback to English if Arabic fails
-      currentLang = 'EN';
-      localStorage.setItem('preferredLanguage', currentLang);
-      if (langText) langText.textContent = currentLang;
-      await loadTranslations('EN');
-    }
-  } else {
-    await loadTranslations('EN');
-  }
-  
-  // Set up language toggle
-  if (langToggle) {
-    langToggle.addEventListener('click', async () => {
-      // Toggle between EN and AR
-      currentLang = currentLang === 'EN' ? 'AR' : 'EN';
-      localStorage.setItem('preferredLanguage', currentLang);
-      
-      // Update UI
-      if (langText) langText.textContent = currentLang;
-      
-      // Load and apply translations
-      const success = await loadTranslations(currentLang);
-      
-      // If Arabic fails, fallback to English
-      if (currentLang === 'AR' && !success) {
-        currentLang = 'EN';
-        localStorage.setItem('preferredLanguage', currentLang);
-        if (langText) langText.textContent = currentLang;
-        await loadTranslations('EN');
-      }
-      
-      // Apply RTL for Arabic
-      if (currentLang === 'AR') {
-        document.documentElement.setAttribute('dir', 'rtl');
-        document.documentElement.setAttribute('lang', 'ar');
-      } else {
-        document.documentElement.setAttribute('dir', 'ltr');
-        document.documentElement.setAttribute('lang', 'en');
-      }
-    });
+  // Translate other common elements
+  const yearEl = document.getElementById('year');
+  if (yearEl) {
+    yearEl.textContent = String(new Date().getFullYear());
   }
 }
 
