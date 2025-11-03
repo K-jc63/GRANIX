@@ -1,151 +1,3 @@
-// Mobile nav toggle
-const nav = document.querySelector('.site-nav');
-const toggle = document.querySelector('.nav-toggle');
-if (toggle && nav) {
-  toggle.addEventListener('click', () => {
-    const isOpen = nav.getAttribute('data-open') === 'true';
-    nav.setAttribute('data-open', String(!isOpen));
-    toggle.setAttribute('aria-expanded', String(!isOpen));
-    
-    // Prevent body scroll when menu is open
-    if (!isOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-  });
-  
-  // Close menu when a link is clicked (improves small-screen UX)
-  nav.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target && target.closest && target.closest('a')) {
-      nav.setAttribute('data-open', 'false');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-  });
-  
-  // Close menu when clicking the close button (×) in mobile menu
-  nav.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target && target.parentNode && target.parentNode.tagName === 'UL') {
-      // Check if clicked on the close button (pseudo element)
-      const rect = target.parentNode.getBoundingClientRect();
-      const closeBtnArea = {
-        x: rect.right - 70, // 50px for button + 20px padding
-        y: rect.top + 20,
-        width: 50,
-        height: 50
-      };
-      
-      if (e.clientX >= closeBtnArea.x && e.clientX <= closeBtnArea.x + closeBtnArea.width &&
-          e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
-        nav.setAttribute('data-open', 'false');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
-      }
-    }
-  });
-  
-  // Close menu when clicking outside the menu
-  document.addEventListener('click', (e) => {
-    if (nav.getAttribute('data-open') === 'true' && 
-        !nav.contains(e.target) && 
-        !toggle.contains(e.target)) {
-      nav.setAttribute('data-open', 'false');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-    }
-  });
-  
-  // Close menu when pressing Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && nav.getAttribute('data-open') === 'true') {
-      nav.setAttribute('data-open', 'false');
-      toggle.setAttribute('aria-expanded', 'false');
-      document.body.style.overflow = '';
-      toggle.focus();
-    }
-  });
-}
-
-// Current year in footer
-const yearEl = document.getElementById('year');
-if (yearEl) {
-  yearEl.textContent = String(new Date().getFullYear());
-}
-
-// Language selector functionality with full translation support
-const langToggle = document.getElementById('langToggle');
-
-// Initialize language functionality
-function initLanguage() {
-  // Get saved language preference or default to English
-  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
-  
-  // Update UI to show current language
-  const langText = langToggle.querySelector('.lang-text');
-  if (langText) langText.textContent = currentLang;
-  
-  // Apply RTL for Arabic if needed
-  if (currentLang === 'AR') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', 'en');
-  }
-  
-  // Load translations for current language
-  loadTranslations(currentLang);
-  
-  // Set up language toggle event listener
-  if (langToggle) {
-    langToggle.addEventListener('click', () => {
-      // Toggle between EN and AR
-      const newLang = currentLang === 'EN' ? 'AR' : 'EN';
-      
-      // Save preference
-      localStorage.setItem('preferredLanguage', newLang);
-      
-      // Update current language
-      currentLang = newLang;
-      
-      // Update UI
-      if (langText) langText.textContent = currentLang;
-      
-      // Apply RTL for Arabic
-      if (currentLang === 'AR') {
-        document.documentElement.setAttribute('dir', 'rtl');
-        document.documentElement.setAttribute('lang', 'ar');
-      } else {
-        document.documentElement.setAttribute('dir', 'ltr');
-        document.documentElement.setAttribute('lang', 'en');
-      }
-      
-      // Load and apply translations
-      loadTranslations(currentLang);
-    });
-  }
-}
-
-// Load translations
-async function loadTranslations(lang) {
-  try {
-    const response = await fetch(`lang/${lang.toLowerCase()}.json`);
-    if (response.ok) {
-      const translations = await response.json();
-      applyTranslations(translations, lang);
-      return true;
-    } else {
-      console.warn(`Failed to load ${lang} translations:`, response.status);
-    }
-  } catch (error) {
-    console.warn(`Failed to load ${lang} translations:`, error);
-  }
-  return false;
-}
-
 // Apply translations to the page
 function applyTranslations(translations, lang) {
   // Translate navigation
@@ -290,6 +142,12 @@ function applyTranslations(translations, lang) {
       certNames[2].textContent = translations.global_standards || certNames[2].textContent;
       certNames[3].textContent = translations.eco_friendly || certNames[3].textContent;
     }
+    
+    // Translate slider dots
+    const sliderDots = document.querySelectorAll('.slider-dots button');
+    sliderDots.forEach((dot, index) => {
+      dot.setAttribute('aria-label', `${translations.slide || 'Slide'} ${index + 1}`);
+    });
   }
   
   // About page translations
@@ -323,6 +181,13 @@ function applyTranslations(translations, lang) {
       featureTitles[2].textContent = translations.quality_assured || featureTitles[2].textContent;
     }
     
+    const featureDescriptions = document.querySelectorAll('.feature p');
+    if (featureDescriptions.length >= 3) {
+      featureDescriptions[0].textContent = translations.ethical_provenance_desc || featureDescriptions[0].textContent;
+      featureDescriptions[1].textContent = translations.countries_served_desc || featureDescriptions[1].textContent;
+      featureDescriptions[2].textContent = translations.quality_assured_desc || featureDescriptions[2].textContent;
+    }
+    
     // Translate stats section
     const statLabels = document.querySelectorAll('.stat-label');
     if (statLabels.length >= 4) {
@@ -335,6 +200,28 @@ function applyTranslations(translations, lang) {
     // Translate testimonials section
     const testimonialsTitle = document.querySelector('.testimonials-section h2');
     if (testimonialsTitle) testimonialsTitle.textContent = translations.trusted_worldwide || testimonialsTitle.textContent;
+    
+    // Translate testimonial content
+    const testimonialTexts = document.querySelectorAll('.testimonial-text');
+    if (testimonialTexts.length >= 3) {
+      testimonialTexts[0].textContent = translations.testimonial_1 || testimonialTexts[0].textContent;
+      testimonialTexts[1].textContent = translations.testimonial_2 || testimonialTexts[1].textContent;
+      testimonialTexts[2].textContent = translations.testimonial_3 || testimonialTexts[2].textContent;
+    }
+    
+    const testimonialAuthors = document.querySelectorAll('.testimonial-author strong');
+    if (testimonialAuthors.length >= 3) {
+      testimonialAuthors[0].textContent = translations.testimonial_author_1 || testimonialAuthors[0].textContent;
+      testimonialAuthors[1].textContent = translations.testimonial_author_2 || testimonialAuthors[1].textContent;
+      testimonialAuthors[2].textContent = translations.testimonial_author_3 || testimonialAuthors[2].textContent;
+    }
+    
+    const testimonialLocations = document.querySelectorAll('.testimonial-author span');
+    if (testimonialLocations.length >= 3) {
+      testimonialLocations[0].textContent = translations.testimonial_location_1 || testimonialLocations[0].textContent;
+      testimonialLocations[1].textContent = translations.testimonial_location_2 || testimonialLocations[1].textContent;
+      testimonialLocations[2].textContent = translations.testimonial_location_3 || testimonialLocations[2].textContent;
+    }
   }
   
   // Products page translations
@@ -347,14 +234,86 @@ function applyTranslations(translations, lang) {
     
     const sectionTitles = document.querySelectorAll('h2');
     if (sectionTitles.length >= 4) {
-      sectionTitles[0].textContent = translations.products_title || sectionTitles[0].textContent;
+      sectionTitles[0].textContent = translations.granite_collection || sectionTitles[0].textContent;
       sectionTitles[1].textContent = translations.marble || sectionTitles[1].textContent;
       sectionTitles[2].textContent = translations.quartz || sectionTitles[2].textContent;
       sectionTitles[3].textContent = translations.services_title || sectionTitles[3].textContent;
     }
     
+    // Translate granite collection
+    const graniteTitles = document.querySelectorAll('#granite h3');
+    if (graniteTitles.length >= 2) {
+      graniteTitles[0].textContent = translations.imperial_black_granite || graniteTitles[0].textContent;
+      graniteTitles[1].textContent = translations.storm_grey_granite || graniteTitles[1].textContent;
+    }
+    
+    const graniteDescriptions = document.querySelectorAll('#granite p');
+    if (graniteDescriptions.length >= 2) {
+      graniteDescriptions[0].textContent = translations.imperial_black_granite_desc || graniteDescriptions[0].textContent;
+      graniteDescriptions[1].textContent = translations.storm_grey_granite_desc || graniteDescriptions[1].textContent;
+    }
+    
+    // Translate granite lists
+    const graniteLists = document.querySelectorAll('#granite li');
+    if (graniteLists.length >= 6) {
+      graniteLists[0].innerHTML = `<strong>${translations.origin || 'Origin'}:</strong> ${translations.brazil || 'Brazil'}`;
+      graniteLists[1].innerHTML = `<strong>${translations.finish || 'Finish'}:</strong> ${translations.polished_honed_flamed || 'Polished, Honed, Flamed'}`;
+      graniteLists[2].innerHTML = `<strong>${translations.thickness || 'Thickness'}:</strong> ${translations.two_three_cm || '2cm, 3cm'}`;
+      graniteLists[3].innerHTML = `<strong>${translations.origin || 'Origin'}:</strong> ${translations.india || 'India'}`;
+      graniteLists[4].innerHTML = `<strong>${translations.finish || 'Finish'}:</strong> ${translations.polished_honed_leather || 'Polished, Honed, Leather'}`;
+      graniteLists[5].innerHTML = `<strong>${translations.thickness || 'Thickness'}:</strong> ${translations.two_three_cm || '2cm, 3cm'}`;
+    }
+    
+    // Translate marble collection
+    const marbleTitles = document.querySelectorAll('#marble h3');
+    if (marbleTitles.length >= 2) {
+      marbleTitles[0].textContent = translations.carrara_white_marble || marbleTitles[0].textContent;
+      marbleTitles[1].textContent = translations.emperor_brown_marble || marbleTitles[1].textContent;
+    }
+    
+    const marbleDescriptions = document.querySelectorAll('#marble p');
+    if (marbleDescriptions.length >= 2) {
+      marbleDescriptions[0].textContent = translations.carrara_white_marble_desc || marbleDescriptions[0].textContent;
+      marbleDescriptions[1].textContent = translations.emperor_brown_marble_desc || marbleDescriptions[1].textContent;
+    }
+    
+    // Translate marble lists
+    const marbleLists = document.querySelectorAll('#marble li');
+    if (marbleLists.length >= 6) {
+      marbleLists[0].innerHTML = `<strong>${translations.origin || 'Origin'}:</strong> ${translations.italy_carrara || 'Italy (Carrara)'}`;
+      marbleLists[1].innerHTML = `<strong>${translations.finish || 'Finish'}:</strong> ${translations.polished_honed_brushed || 'Polished, Honed, Brushed'}`;
+      marbleLists[2].innerHTML = `<strong>${translations.thickness || 'Thickness'}:</strong> ${translations.two_three_cm || '2cm, 3cm'}`;
+      marbleLists[3].innerHTML = `<strong>${translations.origin || 'Origin'}:</strong> ${translations.turkey || 'Turkey'}`;
+      marbleLists[4].innerHTML = `<strong>${translations.finish || 'Finish'}:</strong> ${translations.polished_honed || 'Polished, Honed'}`;
+      marbleLists[5].innerHTML = `<strong>${translations.thickness || 'Thickness'}:</strong> ${translations.two_three_cm || '2cm, 3cm'}`;
+    }
+    
+    // Translate quartz collection
+    const quartzTitles = document.querySelectorAll('#quartz h3');
+    if (quartzTitles.length >= 2) {
+      quartzTitles[0].textContent = translations.arctic_white_quartz || quartzTitles[0].textContent;
+      quartzTitles[1].textContent = translations.midnight_black_quartz || quartzTitles[1].textContent;
+    }
+    
+    const quartzDescriptions = document.querySelectorAll('#quartz p');
+    if (quartzDescriptions.length >= 2) {
+      quartzDescriptions[0].textContent = translations.arctic_white_quartz_desc || quartzDescriptions[0].textContent;
+      quartzDescriptions[1].textContent = translations.midnight_black_quartz_desc || quartzDescriptions[1].textContent;
+    }
+    
+    // Translate quartz lists
+    const quartzLists = document.querySelectorAll('#quartz li');
+    if (quartzLists.length >= 6) {
+      quartzLists[0].innerHTML = `<strong>${translations.composition || 'Composition'}:</strong> ${translations.quartz_composition_1 || '93% natural quartz, 7% polymer resins'}`;
+      quartzLists[1].innerHTML = `<strong>${translations.finish || 'Finish'}:</strong> ${translations.polished || 'Polished'}`;
+      quartzLists[2].innerHTML = `<strong>${translations.thickness || 'Thickness'}:</strong> ${translations.two_three_cm || '2cm, 3cm'}`;
+      quartzLists[3].innerHTML = `<strong>${translations.composition || 'Composition'}:</strong> ${translations.quartz_composition_2 || '93% natural quartz, 7% polymer resins'}`;
+      quartzLists[4].innerHTML = `<strong>${translations.finish || 'Finish'}:</strong> ${translations.polished || 'Polished'}`;
+      quartzLists[5].innerHTML = `<strong>${translations.thickness || 'Thickness'}:</strong> ${translations.two_three_cm || '2cm, 3cm'}`;
+    }
+    
     // Translate services section
-    const serviceTitles = document.querySelectorAll('.card h3');
+    const serviceTitles = document.querySelectorAll('#services .card h3');
     if (serviceTitles.length >= 4) {
       serviceTitles[0].textContent = translations.precision_fabrication || serviceTitles[0].textContent;
       serviceTitles[1].textContent = translations.professional_installation || serviceTitles[1].textContent;
@@ -362,7 +321,7 @@ function applyTranslations(translations, lang) {
       serviceTitles[3].textContent = translations.maintenance_restoration || serviceTitles[3].textContent;
     }
     
-    const serviceDescriptions = document.querySelectorAll('.card p');
+    const serviceDescriptions = document.querySelectorAll('#services .card p');
     if (serviceDescriptions.length >= 4) {
       serviceDescriptions[0].textContent = translations.precision_fabrication_desc || serviceDescriptions[0].textContent;
       serviceDescriptions[1].textContent = translations.professional_installation_desc || serviceDescriptions[1].textContent;
@@ -384,6 +343,9 @@ function applyTranslations(translations, lang) {
     
     const introTitle = document.querySelector('.application-intro h2');
     if (introTitle) introTitle.textContent = translations.applications_title || introTitle.textContent;
+    
+    const introDescription = document.querySelector('.application-intro p');
+    if (introDescription) introDescription.textContent = translations.applications_intro_desc || introDescription.textContent;
     
     const categoryHeaders = document.querySelectorAll('.category-header h2');
     if (categoryHeaders.length >= 3) {
@@ -474,6 +436,22 @@ function applyTranslations(translations, lang) {
     
     const submitButton = document.querySelector('button[type="submit"]');
     if (submitButton) submitButton.textContent = translations.submit_request || submitButton.textContent;
+    
+    // Translate contact information
+    const internationalPhone = document.querySelector('a[href="https://wa.me/971581968890"]');
+    if (internationalPhone) {
+      internationalPhone.innerHTML = `📱 +971 58 196 8890<span style="font-size: 0.9em; color: var(--muted);">(${translations.phone_international || 'International'})</span>`;
+    }
+    
+    const eastAfricaPhone = document.querySelector('a[href="https://wa.me/256708331185"]');
+    if (eastAfricaPhone) {
+      eastAfricaPhone.innerHTML = `📱 +256 708 331 185<span style="font-size: 0.9em; color: var(--muted);">(${translations.phone_east_africa || 'East Africa'})</span>`;
+    }
+    
+    const emailLink = document.querySelector('a[href="mailto:granixprimestonesltd25@gmail.com"]');
+    if (emailLink) {
+      emailLink.innerHTML = `✉️ ${translations.email_address || 'granixprimestonesltd25@gmail.com'}`;
+    }
   }
   
   // Company profile translations
@@ -494,10 +472,37 @@ function applyTranslations(translations, lang) {
       sectionTitles[5].textContent = translations.contact_info || sectionTitles[5].textContent;
     }
     
+    // Translate who we are section
+    const whoWeAreParagraph = document.querySelector('.profile-section p');
+    if (whoWeAreParagraph) whoWeAreParagraph.textContent = translations.who_we_are_desc || whoWeAreParagraph.textContent;
+    
+    // Translate product and service list items
+    const productListItems = document.querySelectorAll('.profile-section li');
+    if (productListItems.length >= 9) {
+      productListItems[0].innerHTML = `<strong>${translations.natural_stones || 'Natural Stones'}:</strong> ${translations.product_list_1 || 'Granite, Marble, Quartz for countertops, flooring, wall cladding, monuments'}`;
+      productListItems[1].innerHTML = `<strong>${translations.applications || 'Applications'}:</strong> ${translations.product_list_2 || 'Kitchens, bathrooms, floor tiles, wall cladding, staircases, walkways, monuments'}`;
+      productListItems[2].innerHTML = `<strong>${translations.services || 'Services'}:</strong> ${translations.product_list_3 || 'Supply, fabrication, installation, and customization'}`;
+      productListItems[3].innerHTML = `<strong>${translations.local_market || 'Local Market'}:</strong> ${translations.market_list_1 || 'Construction and interior design projects in Uganda'}`;
+      productListItems[4].innerHTML = `<strong>${translations.international_market || 'International Market'}:</strong> ${translations.market_list_2 || 'Exporting premium stones to global markets'}`;
+      productListItems[5].innerHTML = `<strong>${translations.natural_durable || 'Natural and Durable'}:</strong> ${translations.quality_list_1 || 'Stones selected for strength, beauty, and longevity'}`;
+      productListItems[6].innerHTML = `<strong>${translations.sustainable_sourcing || 'Sustainable Sourcing'}:</strong> ${translations.quality_list_2 || 'Environmentally responsible procurement'}`;
+      productListItems[7].innerHTML = `<strong>${translations.quality_assurance || 'Quality Assurance'}:</strong> ${translations.why_choose_list_1 || 'Commitment to delivering premium natural stones with strict QA'}`;
+      productListItems[8].innerHTML = `<strong>${translations.customer_centric || 'Customer-Centric Approach'}:</strong> ${translations.why_choose_list_2 || 'Tailoring solutions to meet client needs, budgets, and timelines'}`;
+    }
+    
     const downloadButtons = document.querySelectorAll('button[onclick="window.print()"]');
     downloadButtons.forEach(button => {
       button.textContent = translations.download_pdf || button.textContent;
     });
+    
+    // Translate contact information
+    const contactInfo = document.querySelector('.profile-contact p');
+    if (contactInfo) {
+      contactInfo.innerHTML = `${translations.kampala_uganda || 'Kampala, Uganda'}<br>
+      <a href="tel:+256708331185">+256 708 331 185</a> &middot;
+      <a href="tel:+971581968890">+971 58 196 8890</a><br>
+      <a href="mailto:granixprimestonesltd25@gmail.com">${translations.email_address || 'granixprimestonesltd25@gmail.com'}</a>`;
+    }
   }
   
   // Translate footer
@@ -524,295 +529,4 @@ function applyTranslations(translations, lang) {
   if (yearEl) {
     yearEl.textContent = String(new Date().getFullYear());
   }
-}
-
-// Initialize language on page load
-if (langToggle) {
-  // Wait for DOM to be fully loaded
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initLanguage);
-  } else {
-    initLanguage();
-  }
-}
-
-// Enhanced header on scroll
-const header = document.querySelector('.site-header');
-const backToTopBtn = document.getElementById('backToTop');
-if (header) {
-  let lastScroll = 0;
-  window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-    
-    // Header effect
-    if (currentScroll > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-    
-    // Back to top button visibility
-    if (backToTopBtn) {
-      if (currentScroll > 300) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
-      }
-    }
-    
-    lastScroll = currentScroll;
-  }, { passive: true });
-}
-
-// Back to top button click handler
-if (backToTopBtn) {
-  backToTopBtn.addEventListener('click', () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
-    });
-  });
-}
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const href = this.getAttribute('href');
-    if (href !== '#' && href.startsWith('#')) {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        window.scrollTo({
-          top: target.offsetTop - 80, // Adjust for header height
-          behavior: 'smooth'
-        });
-      }
-    }
-  });
-});
-
-// Enhanced professional slider with smooth transitions
-(function initSlider(){
-  const slider = document.querySelector('.slider');
-  if (!slider) return;
-  const track = slider.querySelector('.slider-track');
-  let slides = Array.from(slider.querySelectorAll('.slide'));
-  const prevBtn = slider.querySelector('.prev');
-  const nextBtn = slider.querySelector('.next');
-  const dots = slider.querySelector('.slider-dots');
-  let index = 0;
-  let autoplayTimer = null;
-  let isTransitioning = false;
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  // Preload images for smoother transitions
-  slides.forEach((slide) => {
-    const img = slide.querySelector('img');
-    if (img && img.src) {
-      const preload = new Image();
-      preload.src = img.src;
-    }
-  });
-
-  function update(smooth = true) {
-    const slideWidth = slider.clientWidth;
-    const offsetPx = -index * slideWidth;
-    
-    if (smooth && !prefersReducedMotion) {
-      track.style.transition = 'transform 0.6s cubic-bezier(0.4, 0.0, 0.2, 1)';
-    } else {
-      track.style.transition = 'none';
-    }
-    
-    track.style.transform = `translateX(${offsetPx}px)`;
-    
-    if (dots) {
-      Array.from(dots.children).forEach((b, i) => {
-        b.setAttribute('aria-current', String(i === index));
-        b.classList.toggle('active', i === index);
-      });
-    }
-    
-    // Add active class to current slide for fade-in effect
-    slides.forEach((s, i) => {
-      s.classList.toggle('active', i === index);
-    });
-  }
-
-  function goTo(i, smooth = true) {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    index = (i + slides.length) % slides.length;
-    update(smooth);
-    setTimeout(() => { isTransitioning = false; }, 600);
-  }
-
-  function next() { goTo(index + 1); }
-  function prev() { goTo(index - 1); }
-
-  if (prevBtn) {
-    prevBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      stopAutoplay();
-      prev();
-      startAutoplay();
-    });
-  }
-  if (nextBtn) {
-    nextBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      stopAutoplay();
-      next();
-      startAutoplay();
-    });
-  }
-
-  function buildDots() {
-    if (!dots) return;
-    dots.innerHTML = '';
-    slides.forEach((_, i) => {
-      const b = document.createElement('button');
-      b.type = 'button';
-      b.setAttribute('aria-label', `Go to slide ${i + 1}`);
-      b.addEventListener('click', () => {
-        stopAutoplay();
-        goTo(i);
-        startAutoplay();
-      });
-      dots.appendChild(b);
-    });
-  }
-
-  buildDots();
-
-  function startAutoplay() {
-    if (prefersReducedMotion) return;
-    stopAutoplay();
-    // Longer interval for better image viewing (5 seconds)
-    autoplayTimer = window.setInterval(next, 5000);
-  }
-  function stopAutoplay() {
-    if (autoplayTimer) window.clearInterval(autoplayTimer);
-    autoplayTimer = null;
-  }
-
-  slider.addEventListener('mouseenter', stopAutoplay);
-  slider.addEventListener('mouseleave', startAutoplay);
-  slider.addEventListener('touchstart', stopAutoplay, { passive: true });
-
-  // Enhanced swipe with visual feedback
-  let startX = 0; let dx = 0; let startY = 0; let dy = 0;
-  slider.addEventListener('touchstart', (e) => { 
-    startX = e.touches[0].clientX;
-    startY = e.touches[0].clientY;
-  }, { passive: true });
-  
-  slider.addEventListener('touchmove', (e) => { 
-    dx = e.touches[0].clientX - startX;
-    dy = e.touches[0].clientY - startY;
-  }, { passive: true });
-  
-  slider.addEventListener('touchend', () => {
-    // Only trigger if horizontal swipe is dominant
-    if (Math.abs(dx) > Math.abs(dy)) {
-      if (dx > 50) prev();
-      if (dx < -50) next();
-    }
-    dx = 0;
-    dy = 0;
-    startAutoplay();
-  });
-
-  // Keyboard navigation
-  slider.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-      e.preventDefault();
-      stopAutoplay();
-      prev();
-      startAutoplay();
-    } else if (e.key === 'ArrowRight') {
-      e.preventDefault();
-      stopAutoplay();
-      next();
-      startAutoplay();
-    }
-  });
-  slider.setAttribute('tabindex', '0');
-
-  update(false);
-  startAutoplay();
-  
-  // Keep alignment on resize with debouncing
-  let resizeTimer = null;
-  window.addEventListener('resize', () => {
-    if (resizeTimer) window.clearTimeout(resizeTimer);
-    resizeTimer = window.setTimeout(() => update(false), 150);
-  });
-
-  // Remove broken images from the slider dynamically with fade out
-  slides.forEach((slide) => {
-    const img = slide.querySelector('img');
-    if (!img) return;
-    
-    // Add loading state
-    img.addEventListener('load', () => {
-      slide.classList.add('loaded');
-    }, { once: true });
-    
-    img.addEventListener('error', () => {
-      console.warn('Failed to load image:', img.src);
-      slide.style.opacity = '0';
-      setTimeout(() => {
-        const currentIndex = slides.indexOf(slide);
-        slide.remove();
-        slides = Array.from(slider.querySelectorAll('.slide'));
-        if (index >= slides.length) index = Math.max(0, slides.length - 1);
-        buildDots();
-        update(false);
-        // Hide controls if fewer than 2 slides remain
-        const controls = slider.querySelector('.slider-controls');
-        if (controls) controls.style.display = slides.length > 1 ? '' : 'none';
-        if (dots) dots.style.display = slides.length > 1 ? '' : 'none';
-      }, 300);
-    }, { once: true });
-  });
-
-  // If no or single slide, adjust UI
-  const controls = slider.querySelector('.slider-controls');
-  if (controls) controls.style.display = slides.length > 1 ? '' : 'none';
-  if (dots) dots.style.display = slides.length > 1 ? '' : 'none';
-  })();
-
-// Video mute toggle functionality
-const extractionVideo = document.getElementById('extractionVideo');
-const muteToggle = document.getElementById('muteToggle');
-
-if (extractionVideo && muteToggle) {
-  muteToggle.addEventListener('click', () => {
-    extractionVideo.muted = !extractionVideo.muted;
-    const icon = muteToggle.querySelector('.mute-icon');
-    const text = muteToggle.querySelector('.mute-text');
-    
-    // Get current language
-    const currentLang = localStorage.getItem('preferredLanguage') || 'EN';
-    
-    if (extractionVideo.muted) {
-      if (icon) icon.textContent = '🔇';
-      if (text) text.textContent = currentLang === 'AR' ? 'إيقاف الصوت' : 'Sound Off';
-    } else {
-      if (icon) icon.textContent = '🔊';
-      if (text) text.textContent = currentLang === 'AR' ? 'تشغيل الصوت' : 'Sound On';
-    }
-  });
-  
-  // Hover effect for mute button
-  muteToggle.addEventListener('mouseenter', () => {
-    muteToggle.style.background = 'rgba(255,255,255,0.3)';
-    muteToggle.style.transform = 'scale(1.05)';
-  });
-  
-  muteToggle.addEventListener('mouseleave', () => {
-    muteToggle.style.background = 'rgba(255,255,255,0.2)';
-    muteToggle.style.transform = 'scale(1)';
-  });
 }
