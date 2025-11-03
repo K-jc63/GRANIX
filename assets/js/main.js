@@ -58,6 +58,8 @@ async function loadTranslations(lang) {
       translations = await response.json();
       applyTranslations();
       return true;
+    } else {
+      console.warn(`Failed to load ${lang} translations:`, response.status);
     }
   } catch (error) {
     console.warn(`Failed to load ${lang} translations:`, error);
@@ -184,7 +186,14 @@ async function initLanguage() {
   
   // Load translations for current language
   if (currentLang === 'AR') {
-    await loadTranslations('AR');
+    const success = await loadTranslations('AR');
+    if (!success) {
+      // Fallback to English if Arabic fails
+      currentLang = 'EN';
+      localStorage.setItem('preferredLanguage', currentLang);
+      if (langText) langText.textContent = currentLang;
+      await loadTranslations('EN');
+    }
   } else {
     await loadTranslations('EN');
   }
@@ -200,7 +209,15 @@ async function initLanguage() {
       if (langText) langText.textContent = currentLang;
       
       // Load and apply translations
-      await loadTranslations(currentLang);
+      const success = await loadTranslations(currentLang);
+      
+      // If Arabic fails, fallback to English
+      if (currentLang === 'AR' && !success) {
+        currentLang = 'EN';
+        localStorage.setItem('preferredLanguage', currentLang);
+        if (langText) langText.textContent = currentLang;
+        await loadTranslations('EN');
+      }
       
       // Apply RTL for Arabic
       if (currentLang === 'AR') {
@@ -216,7 +233,12 @@ async function initLanguage() {
 
 // Initialize language on page load
 if (langToggle) {
-  initLanguage();
+  // Wait for DOM to be fully loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLanguage);
+  } else {
+    initLanguage();
+  }
 }
 
 // Enhanced header on scroll

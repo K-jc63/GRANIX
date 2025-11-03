@@ -319,6 +319,7 @@ input, button, textarea, select { font: inherit; }
 /* Footer stacking on small screens */
 @media (max-width: 640px) {
   .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .footer-links { flex-wrap: wrap; }
 }
 
 /* Respect reduced motion preferences */
@@ -364,6 +365,12 @@ input, button, textarea, select { font: inherit; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 0; }
 .footer-links { list-style: none; display: flex; gap: 12px; margin: 0; padding: 0; }
 .footer-links a { text-decoration: none; color: var(--text); }
+
+/* Footer stacking on small screens */
+@media (max-width: 640px) {
+  .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .footer-links { flex-wrap: wrap; }
+}
 
 /* Back to Top Button */
 .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-600)); color: #fff; border: none; box-shadow: 0 8px 24px rgba(14,74,60,.3); cursor: pointer; display: grid; place-items: center; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1); z-index: 100; }
