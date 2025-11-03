@@ -108,6 +108,23 @@ if (backToTopBtn) {
   });
 }
 
+// Smooth scrolling for anchor links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    if (href !== '#' && href.startsWith('#')) {
+      e.preventDefault();
+      const target = document.querySelector(href);
+      if (target) {
+        window.scrollTo({
+          top: target.offsetTop - 80, // Adjust for header height
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
+});
+
 // Enhanced professional slider with smooth transitions
 (function initSlider(){
   const slider = document.querySelector('.slider');
@@ -330,5 +347,3 @@ if (extractionVideo && muteToggle) {
     muteToggle.style.transform = 'scale(1)';
   });
 }
-
-
