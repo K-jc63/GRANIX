@@ -7,12 +7,34 @@ if (toggle && nav) {
     nav.setAttribute('data-open', String(!isOpen));
     toggle.setAttribute('aria-expanded', String(!isOpen));
   });
+  
   // Close menu when a link is clicked (improves small-screen UX)
   nav.addEventListener('click', (e) => {
     const target = e.target;
     if (target && target.closest && target.closest('a')) {
       nav.setAttribute('data-open', 'false');
       toggle.setAttribute('aria-expanded', 'false');
+    }
+  });
+  
+  // Close menu when clicking the close button (×) in mobile menu
+  nav.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target && target.parentNode && target.parentNode.tagName === 'UL') {
+      // Check if clicked on the close button (pseudo element)
+      const rect = target.parentNode.getBoundingClientRect();
+      const closeBtnArea = {
+        x: rect.right - 70, // 50px for button + 20px padding
+        y: rect.top + 20,
+        width: 50,
+        height: 50
+      };
+      
+      if (e.clientX >= closeBtnArea.x && e.clientX <= closeBtnArea.x + closeBtnArea.width &&
+          e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
+        nav.setAttribute('data-open', 'false');
+        toggle.setAttribute('aria-expanded', 'false');
+      }
     }
   });
 }
@@ -23,51 +45,178 @@ if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
-// Language selector functionality
+// Language selector functionality with full translation support
 const langToggle = document.getElementById('langToggle');
-if (langToggle) {
-  const langText = langToggle.querySelector('.lang-text');
-  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
-  
-  // Set initial language display
-  if (langText) langText.textContent = currentLang;
-  
-  langToggle.addEventListener('click', () => {
-    // Toggle between EN and AR
-    currentLang = currentLang === 'EN' ? 'AR' : 'EN';
-    if (langText) langText.textContent = currentLang;
-    localStorage.setItem('preferredLanguage', currentLang);
-    
-    // Apply RTL for Arabic (future enhancement)
-    if (currentLang === 'AR') {
-      document.documentElement.setAttribute('dir', 'rtl');
-      document.documentElement.setAttribute('lang', 'ar');
-      // Show message that Arabic translation is coming soon
-      showLanguageMessage('Arabic version coming soon. Thank you for your patience.');
-    } else {
-      document.documentElement.setAttribute('dir', 'ltr');
-      document.documentElement.setAttribute('lang', 'en');
+let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+let translations = {};
+
+// Load translations
+async function loadTranslations(lang) {
+  try {
+    const response = await fetch(`lang/${lang.toLowerCase()}.json`);
+    if (response.ok) {
+      translations = await response.json();
+      applyTranslations();
+      return true;
     }
-  });
+  } catch (error) {
+    console.warn(`Failed to load ${lang} translations:`, error);
+  }
+  return false;
 }
 
-// Helper function to show language switch message
-function showLanguageMessage(message) {
-  const existingMsg = document.querySelector('.lang-message');
-  if (existingMsg) existingMsg.remove();
+// Apply translations to the page
+function applyTranslations() {
+  // Translate navigation
+  const navLinks = document.querySelectorAll('.site-nav a');
+  if (navLinks.length >= 6) {
+    navLinks[0].textContent = translations.home || 'Home';
+    navLinks[1].textContent = translations.about || 'About';
+    navLinks[2].textContent = translations.products || 'Products';
+    navLinks[3].textContent = translations.applications || 'Applications';
+    navLinks[4].textContent = translations.gallery || 'Gallery';
+    navLinks[5].textContent = translations.contact || 'Contact';
+  }
   
-  const msgDiv = document.createElement('div');
-  msgDiv.className = 'lang-message';
-  msgDiv.textContent = message;
-  msgDiv.style.cssText = 'position: fixed; top: 100px; left: 50%; transform: translateX(-50%); background: var(--brand); color: white; padding: 16px 32px; border-radius: 12px; box-shadow: 0 8px 24px rgba(14,74,60,.3); z-index: 1000; animation: fadeInUp 0.4s ease-out; font-weight: 600;';
-  document.body.appendChild(msgDiv);
+  // Translate page-specific content based on current page
+  const pageTitle = document.title.toLowerCase();
   
-  setTimeout(() => {
-    msgDiv.style.opacity = '0';
-    msgDiv.style.transform = 'translateX(-50%) translateY(-20px)';
-    msgDiv.style.transition = 'all 0.4s ease';
-    setTimeout(() => msgDiv.remove(), 400);
-  }, 3000);
+  if (pageTitle.includes('home') || pageTitle.includes('granix')) {
+    // Homepage translations
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) heroTitle.textContent = translations.hero_title || heroTitle.textContent;
+    
+    const heroSubtitle = document.querySelector('.mission-statement');
+    if (heroSubtitle) heroSubtitle.textContent = translations.hero_subtitle || heroSubtitle.textContent;
+    
+    const ctaPrimary = document.querySelector('.btn-primary');
+    if (ctaPrimary) ctaPrimary.textContent = translations.cta_primary || ctaPrimary.textContent;
+    
+    const ctaSecondary = document.querySelector('.btn[href="gallery.html"]');
+    if (ctaSecondary) ctaSecondary.textContent = translations.cta_secondary || ctaSecondary.textContent;
+    
+    const differenceTitle = document.querySelector('.granix-difference .section-title');
+    if (differenceTitle) differenceTitle.textContent = translations.why_natural_stone || differenceTitle.textContent;
+    
+    const differenceCards = document.querySelectorAll('.difference-card');
+    if (differenceCards.length >= 4) {
+      const titles = [
+        translations.durability_title,
+        translations.unique_character_title,
+        translations.ethical_provenance_title,
+        translations.long_term_value_title
+      ];
+      const descriptions = [
+        translations.durability_desc,
+        translations.unique_character_desc,
+        translations.ethical_provenance_desc,
+        translations.long_term_value_desc
+      ];
+      
+      differenceCards.forEach((card, index) => {
+        const title = card.querySelector('h3');
+        const desc = card.querySelector('p');
+        if (title && titles[index]) title.textContent = titles[index];
+        if (desc && descriptions[index]) desc.textContent = descriptions[index];
+      });
+    }
+    
+    const storyTitle = document.querySelector('.our-story-section .section-title');
+    if (storyTitle) storyTitle.textContent = translations.our_story || storyTitle.textContent;
+    
+    const storySubtitle = document.querySelector('.our-story-section h3');
+    if (storySubtitle) storySubtitle.textContent = translations.from_quarry || storySubtitle.textContent;
+    
+    const storyParagraphs = document.querySelectorAll('.our-story-section p');
+    if (storyParagraphs.length >= 2) {
+      storyParagraphs[0].textContent = translations.story_paragraph_1 || storyParagraphs[0].textContent;
+      storyParagraphs[1].textContent = translations.story_paragraph_2 || storyParagraphs[1].textContent;
+    }
+    
+    const promiseTitle = document.querySelector('.our-story-section .cert-name');
+    if (promiseTitle) promiseTitle.textContent = translations.our_promise || promiseTitle.textContent;
+    
+    const highlightsTitle = document.querySelector('.highlights .section-title');
+    if (highlightsTitle) highlightsTitle.textContent = translations.your_partner || highlightsTitle.textContent;
+    
+    const highlightCards = document.querySelectorAll('.card');
+    if (highlightCards.length >= 4) {
+      const cardTitles = [
+        translations.products_title,
+        translations.services_title,
+        translations.applications_title,
+        translations.quality_sourcing_title
+      ];
+      const cardDescriptions = [
+        translations.products_desc,
+        translations.services_desc,
+        translations.applications_desc,
+        translations.quality_sourcing_desc
+      ];
+      
+      highlightCards.forEach((card, index) => {
+        const title = card.querySelector('h3');
+        const desc = card.querySelector('p');
+        if (title && cardTitles[index]) title.textContent = cardTitles[index];
+        if (desc && cardDescriptions[index]) desc.textContent = cardDescriptions[index];
+      });
+    }
+  }
+  
+  // Update language button text
+  const langText = langToggle.querySelector('.lang-text');
+  if (langText) langText.textContent = currentLang;
+  
+  // Apply RTL for Arabic
+  if (currentLang === 'AR') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+  }
+}
+
+// Initialize language functionality
+async function initLanguage() {
+  const langText = langToggle.querySelector('.lang-text');
+  if (langText) langText.textContent = currentLang;
+  
+  // Load translations for current language
+  if (currentLang === 'AR') {
+    await loadTranslations('AR');
+  } else {
+    await loadTranslations('EN');
+  }
+  
+  // Set up language toggle
+  if (langToggle) {
+    langToggle.addEventListener('click', async () => {
+      // Toggle between EN and AR
+      currentLang = currentLang === 'EN' ? 'AR' : 'EN';
+      localStorage.setItem('preferredLanguage', currentLang);
+      
+      // Update UI
+      if (langText) langText.textContent = currentLang;
+      
+      // Load and apply translations
+      await loadTranslations(currentLang);
+      
+      // Apply RTL for Arabic
+      if (currentLang === 'AR') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+      }
+    });
+  }
+}
+
+// Initialize language on page load
+if (langToggle) {
+  initLanguage();
 }
 
 // Enhanced header on scroll
@@ -315,7 +464,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   const controls = slider.querySelector('.slider-controls');
   if (controls) controls.style.display = slides.length > 1 ? '' : 'none';
   if (dots) dots.style.display = slides.length > 1 ? '' : 'none';
-})();
+  })();
 
 // Video mute toggle functionality
 const extractionVideo = document.getElementById('extractionVideo');
