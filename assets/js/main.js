@@ -6,6 +6,13 @@ if (toggle && nav) {
     const isOpen = nav.getAttribute('data-open') === 'true';
     nav.setAttribute('data-open', String(!isOpen));
     toggle.setAttribute('aria-expanded', String(!isOpen));
+    
+    // Prevent body scroll when menu is open
+    if (!isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
   });
   
   // Close menu when a link is clicked (improves small-screen UX)
@@ -14,6 +21,7 @@ if (toggle && nav) {
     if (target && target.closest && target.closest('a')) {
       nav.setAttribute('data-open', 'false');
       toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
     }
   });
   
@@ -34,7 +42,29 @@ if (toggle && nav) {
           e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
         nav.setAttribute('data-open', 'false');
         toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
       }
+    }
+  });
+  
+  // Close menu when clicking outside the menu
+  document.addEventListener('click', (e) => {
+    if (nav.getAttribute('data-open') === 'true' && 
+        !nav.contains(e.target) && 
+        !toggle.contains(e.target)) {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Close menu when pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.getAttribute('data-open') === 'true') {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      toggle.focus();
     }
   });
 }
@@ -129,6 +159,23 @@ function applyTranslations(translations, lang) {
     navLinks[5].textContent = translations.contact || 'Contact';
   }
   
+  // Translate language selector
+  const langText = document.querySelector('.lang-text');
+  if (langText) {
+    langText.textContent = translations.language || (lang === 'AR' ? 'اللغة' : 'EN');
+  }
+  
+  // Translate video mute button if it exists
+  const muteText = document.querySelector('.mute-text');
+  if (muteText) {
+    const extractionVideo = document.getElementById('extractionVideo');
+    if (extractionVideo) {
+      muteText.textContent = extractionVideo.muted ? 
+        (translations.sound_off || (lang === 'AR' ? 'إيقاف الصوت' : 'Sound Off')) : 
+        (translations.sound_on || (lang === 'AR' ? 'تشغيل الصوت' : 'Sound On'));
+    }
+  }
+  
   // Translate page-specific content based on current page
   const pageTitle = document.title.toLowerCase();
   
@@ -179,13 +226,16 @@ function applyTranslations(translations, lang) {
     if (storySubtitle) storySubtitle.textContent = translations.from_quarry || storySubtitle.textContent;
     
     const storyParagraphs = document.querySelectorAll('.our-story-section p');
-    if (storyParagraphs.length >= 2) {
+    if (storyParagraphs.length >= 3) {
       storyParagraphs[0].textContent = translations.story_paragraph_1 || storyParagraphs[0].textContent;
       storyParagraphs[1].textContent = translations.story_paragraph_2 || storyParagraphs[1].textContent;
     }
     
-    const promiseTitle = document.querySelector('.our-story-section .cert-name');
-    if (promiseTitle) promiseTitle.textContent = translations.our_promise || promiseTitle.textContent;
+    // Translate promise section
+    const promiseSections = document.querySelectorAll('.our-story-section .cert-name');
+    if (promiseSections.length > 0) {
+      promiseSections[0].textContent = translations.our_promise || promiseSections[0].textContent;
+    }
     
     const highlightsTitle = document.querySelector('.highlights .section-title');
     if (highlightsTitle) highlightsTitle.textContent = translations.your_partner || highlightsTitle.textContent;
@@ -212,9 +262,264 @@ function applyTranslations(translations, lang) {
         if (desc && cardDescriptions[index]) desc.textContent = cardDescriptions[index];
       });
     }
+    
+    // Translate stats section
+    const statsTitle = document.querySelector('.stats-section .section-title');
+    if (statsTitle) statsTitle.textContent = translations.trusted_worldwide || statsTitle.textContent;
+    
+    const statLabels = document.querySelectorAll('.stat-label');
+    if (statLabels.length >= 4) {
+      statLabels[0].textContent = translations.years_of_excellence || statLabels[0].textContent;
+      statLabels[1].textContent = translations.projects_completed || statLabels[1].textContent;
+      statLabels[2].textContent = translations.countries_served || statLabels[2].textContent;
+      statLabels[3].textContent = translations.client_satisfaction || statLabels[3].textContent;
+    }
+    
+    // Translate testimonials section
+    const testimonialsTitle = document.querySelector('.testimonials-section .section-title');
+    if (testimonialsTitle) testimonialsTitle.textContent = translations.trusted_worldwide || testimonialsTitle.textContent;
+    
+    // Translate certifications section
+    const certificationsTitle = document.querySelector('.certifications-section .section-title');
+    if (certificationsTitle) certificationsTitle.textContent = translations.global_standards || certificationsTitle.textContent;
+    
+    const certNames = document.querySelectorAll('.cert-name');
+    if (certNames.length >= 4) {
+      certNames[0].textContent = translations.iso_certified || certNames[0].textContent;
+      certNames[1].textContent = translations.quality_assured || certNames[1].textContent;
+      certNames[2].textContent = translations.global_standards || certNames[2].textContent;
+      certNames[3].textContent = translations.eco_friendly || certNames[3].textContent;
+    }
   }
   
-  // Translate other common elements
+  // About page translations
+  if (pageTitle.includes('about')) {
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) heroTitle.textContent = translations.our_story || heroTitle.textContent;
+    
+    const heroSubtitle = document.querySelector('.hero p');
+    if (heroSubtitle) heroSubtitle.textContent = translations.story_paragraph_1 || heroSubtitle.textContent;
+    
+    const sectionTitles = document.querySelectorAll('h2');
+    if (sectionTitles.length >= 3) {
+      sectionTitles[0].textContent = translations.our_story || sectionTitles[0].textContent;
+      sectionTitles[1].textContent = translations.years_of_excellence || sectionTitles[1].textContent;
+      sectionTitles[2].textContent = translations.trusted_worldwide || sectionTitles[2].textContent;
+    }
+    
+    const sectionHeaders = document.querySelectorAll('h3');
+    if (sectionHeaders.length >= 4) {
+      sectionHeaders[0].textContent = translations.from_quarry || sectionHeaders[0].textContent;
+      sectionHeaders[1].textContent = translations.our_promise || sectionHeaders[1].textContent;
+      sectionHeaders[2].textContent = translations.ethical_provenance_title || sectionHeaders[2].textContent;
+      sectionHeaders[3].textContent = translations.quality_title || sectionHeaders[3].textContent;
+    }
+    
+    // Translate feature cards
+    const featureTitles = document.querySelectorAll('.feature h3');
+    if (featureTitles.length >= 3) {
+      featureTitles[0].textContent = translations.ethical_provenance_title || featureTitles[0].textContent;
+      featureTitles[1].textContent = translations.countries_served || featureTitles[1].textContent;
+      featureTitles[2].textContent = translations.quality_assured || featureTitles[2].textContent;
+    }
+    
+    // Translate stats section
+    const statLabels = document.querySelectorAll('.stat-label');
+    if (statLabels.length >= 4) {
+      statLabels[0].textContent = translations.years_of_excellence || statLabels[0].textContent;
+      statLabels[1].textContent = translations.projects_completed || statLabels[1].textContent;
+      statLabels[2].textContent = translations.countries_served || statLabels[2].textContent;
+      statLabels[3].textContent = translations.client_satisfaction || statLabels[3].textContent;
+    }
+    
+    // Translate testimonials section
+    const testimonialsTitle = document.querySelector('.testimonials-section h2');
+    if (testimonialsTitle) testimonialsTitle.textContent = translations.trusted_worldwide || testimonialsTitle.textContent;
+  }
+  
+  // Products page translations
+  if (pageTitle.includes('products')) {
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) heroTitle.textContent = translations.products_title || heroTitle.textContent;
+    
+    const heroSubtitle = document.querySelector('.hero p');
+    if (heroSubtitle) heroSubtitle.textContent = translations.products_desc || heroSubtitle.textContent;
+    
+    const sectionTitles = document.querySelectorAll('h2');
+    if (sectionTitles.length >= 4) {
+      sectionTitles[0].textContent = translations.products_title || sectionTitles[0].textContent;
+      sectionTitles[1].textContent = translations.marble || sectionTitles[1].textContent;
+      sectionTitles[2].textContent = translations.quartz || sectionTitles[2].textContent;
+      sectionTitles[3].textContent = translations.services_title || sectionTitles[3].textContent;
+    }
+    
+    // Translate services section
+    const serviceTitles = document.querySelectorAll('.card h3');
+    if (serviceTitles.length >= 4) {
+      serviceTitles[0].textContent = translations.precision_fabrication || serviceTitles[0].textContent;
+      serviceTitles[1].textContent = translations.professional_installation || serviceTitles[1].textContent;
+      serviceTitles[2].textContent = translations.custom_design || serviceTitles[2].textContent;
+      serviceTitles[3].textContent = translations.maintenance_restoration || serviceTitles[3].textContent;
+    }
+    
+    const serviceDescriptions = document.querySelectorAll('.card p');
+    if (serviceDescriptions.length >= 4) {
+      serviceDescriptions[0].textContent = translations.precision_fabrication_desc || serviceDescriptions[0].textContent;
+      serviceDescriptions[1].textContent = translations.professional_installation_desc || serviceDescriptions[1].textContent;
+      serviceDescriptions[2].textContent = translations.custom_design_desc || serviceDescriptions[2].textContent;
+      serviceDescriptions[3].textContent = translations.maintenance_restoration_desc || serviceDescriptions[3].textContent;
+    }
+    
+    const ctaButton = document.querySelector('.btn-primary');
+    if (ctaButton) ctaButton.textContent = translations.request_consultation || ctaButton.textContent;
+  }
+  
+  // Applications page translations
+  if (pageTitle.includes('applications')) {
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) heroTitle.textContent = translations.applications_title || heroTitle.textContent;
+    
+    const heroSubtitle = document.querySelector('.hero p');
+    if (heroSubtitle) heroSubtitle.textContent = translations.applications_desc || heroSubtitle.textContent;
+    
+    const introTitle = document.querySelector('.application-intro h2');
+    if (introTitle) introTitle.textContent = translations.applications_title || introTitle.textContent;
+    
+    const categoryHeaders = document.querySelectorAll('.category-header h2');
+    if (categoryHeaders.length >= 3) {
+      categoryHeaders[0].textContent = translations.residential_title || categoryHeaders[0].textContent;
+      categoryHeaders[1].textContent = translations.commercial_title || categoryHeaders[1].textContent;
+      categoryHeaders[2].textContent = translations.specialty_title || categoryHeaders[2].textContent;
+    }
+    
+    const categoryDescriptions = document.querySelectorAll('.category-header p');
+    if (categoryDescriptions.length >= 3) {
+      categoryDescriptions[0].textContent = translations.residential_desc || categoryDescriptions[0].textContent;
+      categoryDescriptions[1].textContent = translations.commercial_desc || categoryDescriptions[1].textContent;
+      categoryDescriptions[2].textContent = translations.specialty_desc || categoryDescriptions[2].textContent;
+    }
+    
+    // Translate application cards
+    const appCardTitles = document.querySelectorAll('.app-content h3');
+    const appCardDescriptions = document.querySelectorAll('.app-content p');
+    
+    // Translate benefits section
+    const benefitsTitle = document.querySelector('.benefits-section h2');
+    if (benefitsTitle) benefitsTitle.textContent = translations.why_choose_natural_stone || benefitsTitle.textContent;
+    
+    const benefitTitles = document.querySelectorAll('.benefit-card h3');
+    if (benefitTitles.length >= 4) {
+      benefitTitles[0].textContent = translations.timeless_beauty || benefitTitles[0].textContent;
+      benefitTitles[1].textContent = translations.exceptional_durability || benefitTitles[1].textContent;
+      benefitTitles[2].textContent = translations.increases_value || benefitTitles[2].textContent;
+      benefitTitles[3].textContent = translations.easy_maintenance || benefitTitles[3].textContent;
+    }
+    
+    const benefitDescriptions = document.querySelectorAll('.benefit-card p');
+    if (benefitDescriptions.length >= 4) {
+      benefitDescriptions[0].textContent = translations.timeless_beauty_desc || benefitDescriptions[0].textContent;
+      benefitDescriptions[1].textContent = translations.exceptional_durability_desc || benefitDescriptions[1].textContent;
+      benefitDescriptions[2].textContent = translations.increases_value_desc || benefitDescriptions[2].textContent;
+      benefitDescriptions[3].textContent = translations.easy_maintenance_desc || benefitDescriptions[3].textContent;
+    }
+    
+    // Translate CTA section
+    const ctaTitle = document.querySelector('.cta-section h2');
+    if (ctaTitle) ctaTitle.textContent = translations.lets_create || ctaTitle.textContent;
+    
+    const ctaSubtitle = document.querySelector('.cta-section p');
+    if (ctaSubtitle) ctaSubtitle.textContent = translations.lets_create_desc || ctaSubtitle.textContent;
+    
+    const ctaButtons = document.querySelectorAll('.cta-section .btn');
+    if (ctaButtons.length >= 2) {
+      ctaButtons[0].textContent = translations.request_consultation || ctaButtons[0].textContent;
+      ctaButtons[1].textContent = translations.browse_products || ctaButtons[1].textContent;
+    }
+  }
+  
+  // Gallery page translations
+  if (pageTitle.includes('gallery')) {
+    const heroTitle = document.querySelector('.hero h1');
+    if (heroTitle) heroTitle.textContent = translations.gallery || heroTitle.textContent;
+    
+    const heroSubtitle = document.querySelector('.hero p');
+    if (heroSubtitle) heroSubtitle.textContent = translations.gallery_desc || heroSubtitle.textContent;
+    
+    const cardTitles = document.querySelectorAll('.card h3');
+    const cardDescriptions = document.querySelectorAll('.card p');
+    
+    const ctaButton = document.querySelector('.btn-primary');
+    if (ctaButton) ctaButton.textContent = translations.begin_consultation || ctaButton.textContent;
+  }
+  
+  // Contact page translations
+  if (pageTitle.includes('contact')) {
+    const heroTitle = document.querySelector('h1');
+    if (heroTitle) heroTitle.textContent = translations.request_consultation || heroTitle.textContent;
+    
+    const heroSubtitle = document.querySelector('h1 + p');
+    if (heroSubtitle) heroSubtitle.textContent = translations.contact_desc || heroSubtitle.textContent;
+    
+    const cardTitle = document.querySelector('.card h2');
+    if (cardTitle) cardTitle.textContent = translations.contact_info || cardTitle.textContent;
+    
+    const nameLabel = document.querySelector('input[name="name"]').previousElementSibling;
+    if (nameLabel) nameLabel.textContent = translations.name || nameLabel.textContent;
+    
+    const emailLabel = document.querySelector('input[name="email"]').previousElementSibling;
+    if (emailLabel) emailLabel.textContent = translations.email || emailLabel.textContent;
+    
+    const messageLabel = document.querySelector('textarea[name="message"]').previousElementSibling;
+    if (messageLabel) messageLabel.textContent = translations.message || messageLabel.textContent;
+    
+    const submitButton = document.querySelector('button[type="submit"]');
+    if (submitButton) submitButton.textContent = translations.submit_request || submitButton.textContent;
+  }
+  
+  // Company profile translations
+  if (pageTitle.includes('company') || pageTitle.includes('profile')) {
+    const coverTitle = document.querySelector('.profile-cover h1');
+    if (coverTitle) coverTitle.textContent = translations.company_name || coverTitle.textContent;
+    
+    const coverSubtitle = document.querySelector('.profile-cover p');
+    if (coverSubtitle) coverSubtitle.textContent = translations.company_profile || coverSubtitle.textContent;
+    
+    const sectionTitles = document.querySelectorAll('.profile-section h2');
+    if (sectionTitles.length >= 6) {
+      sectionTitles[0].textContent = translations.who_we_are || sectionTitles[0].textContent;
+      sectionTitles[1].textContent = translations.key_products || sectionTitles[1].textContent;
+      sectionTitles[2].textContent = translations.markets_served || sectionTitles[2].textContent;
+      sectionTitles[3].textContent = translations.quality_sourcing || sectionTitles[3].textContent;
+      sectionTitles[4].textContent = translations.why_choose_us || sectionTitles[4].textContent;
+      sectionTitles[5].textContent = translations.contact_info || sectionTitles[5].textContent;
+    }
+    
+    const downloadButtons = document.querySelectorAll('button[onclick="window.print()"]');
+    downloadButtons.forEach(button => {
+      button.textContent = translations.download_pdf || button.textContent;
+    });
+  }
+  
+  // Translate footer
+  const footerCopyright = document.querySelector('.site-footer p');
+  if (footerCopyright) {
+    const year = new Date().getFullYear();
+    footerCopyright.innerHTML = `&copy; ${year} ${translations.company_name || 'Granix Prime Stones Ltd'}. ${translations.footer_copyright || 'All rights reserved'}.`;
+  }
+  
+  // Translate footer links
+  const footerLinks = document.querySelectorAll('.footer-links a');
+  if (footerLinks.length >= 3) {
+    footerLinks[0].textContent = translations.about || 'About';
+    footerLinks[1].textContent = translations.products || 'Products';
+    if (pageTitle.includes('contact')) {
+      footerLinks[2].textContent = translations.gallery || 'Gallery';
+    } else {
+      footerLinks[2].textContent = translations.contact || 'Contact';
+    }
+  }
+  
+  // Translate year in footer
   const yearEl = document.getElementById('year');
   if (yearEl) {
     yearEl.textContent = String(new Date().getFullYear());
@@ -488,12 +793,15 @@ if (extractionVideo && muteToggle) {
     const icon = muteToggle.querySelector('.mute-icon');
     const text = muteToggle.querySelector('.mute-text');
     
+    // Get current language
+    const currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+    
     if (extractionVideo.muted) {
-      icon.textContent = '🔇';
-      text.textContent = 'Sound Off';
+      if (icon) icon.textContent = '🔇';
+      if (text) text.textContent = currentLang === 'AR' ? 'إيقاف الصوت' : 'Sound Off';
     } else {
-      icon.textContent = '🔊';
-      text.textContent = 'Sound On';
+      if (icon) icon.textContent = '🔊';
+      if (text) text.textContent = currentLang === 'AR' ? 'تشغيل الصوت' : 'Sound On';
     }
   });
   
