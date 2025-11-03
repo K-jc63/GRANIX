@@ -530,3 +530,151 @@ function applyTranslations(translations, lang) {
     yearEl.textContent = String(new Date().getFullYear());
   }
 }
+
+// Mobile nav toggle
+const nav = document.querySelector('.site-nav');
+const toggle = document.querySelector('.nav-toggle');
+if (toggle && nav) {
+  toggle.addEventListener('click', () => {
+    const isOpen = nav.getAttribute('data-open') === 'true';
+    nav.setAttribute('data-open', String(!isOpen));
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    
+    // Prevent body scroll when menu is open
+    if (!isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Close menu when a link is clicked (improves small-screen UX)
+  nav.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target && target.closest && target.closest('a')) {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Close menu when clicking the close button (×) in mobile menu
+  nav.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target && target.parentNode && target.parentNode.tagName === 'UL') {
+      // Check if clicked on the close button (pseudo element)
+      const rect = target.parentNode.getBoundingClientRect();
+      const closeBtnArea = {
+        x: rect.right - 70, // 50px for button + 20px padding
+        y: rect.top + 20,
+        width: 50,
+        height: 50
+      };
+      
+      if (e.clientX >= closeBtnArea.x && e.clientX <= closeBtnArea.x + closeBtnArea.width &&
+          e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
+        nav.setAttribute('data-open', 'false');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+    }
+  });
+  
+  // Close menu when clicking outside the menu
+  document.addEventListener('click', (e) => {
+    if (nav.getAttribute('data-open') === 'true' && 
+        !nav.contains(e.target) && 
+        !toggle.contains(e.target)) {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
+  });
+  
+  // Close menu when pressing Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && nav.getAttribute('data-open') === 'true') {
+      nav.setAttribute('data-open', 'false');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      toggle.focus();
+    }
+  });
+}
+
+// Current year in footer
+const yearEl = document.getElementById('year');
+if (yearEl) {
+  yearEl.textContent = String(new Date().getFullYear());
+}
+
+// Language selector functionality with full translation support
+const langToggle = document.getElementById('langToggle');
+
+// Initialize language functionality
+function initLanguage() {
+  // Get saved language preference or default to English
+  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+  
+  // Update UI to show current language
+  const langText = langToggle.querySelector('.lang-text');
+  if (langText) langText.textContent = currentLang;
+  
+  // Apply RTL for Arabic if needed
+  if (currentLang === 'AR') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+  }
+  
+  // Load translations for current language
+  loadTranslations(currentLang);
+  
+  // Set up language toggle event listener
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      // Toggle between EN and AR
+      const newLang = currentLang === 'EN' ? 'AR' : 'EN';
+      
+      // Save preference
+      localStorage.setItem('preferredLanguage', newLang);
+      
+      // Update current language
+      currentLang = newLang;
+      
+      // Update UI
+      if (langText) langText.textContent = currentLang;
+      
+      // Apply RTL for Arabic
+      if (currentLang === 'AR') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+      }
+      
+      // Load and apply translations
+      loadTranslations(currentLang);
+    });
+  }
+}
+
+// Load translations
+async function loadTranslations(lang) {
+  try {
+    const response = await fetch(`lang/${lang.toLowerCase()}.json`);
+    if (response.ok) {
+      const translations = await response.json();
+      applyTranslations(translations, lang);
+      return true;
+    } else {
+      console.warn(`Failed to load ${lang} translations:`, response.status);
+    }
+  } catch (error) {
+    console.warn(`Failed to load ${lang} translations:`, error);
+  }
+  return false;
+}
