@@ -451,11 +451,51 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes scaleIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 @keyframes shimmer { 0% { left: -100%; } 100% { left: 100%; } }
-.card, .testimonial-card, .stat-card, .cert-badge { animation: fadeInUp 0.6s ease-out backwards; }
-.card:nth-child(1) { animation-delay: 0.1s; }
-.card:nth-child(2) { animation-delay: 0.2s; }
-.card:nth-child(3) { animation-delay: 0.3s; }
-.card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Scroll animation classes */
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.scroll-animate.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card, .testimonial-card, .stat-card, .cert-badge, .feature, .difference-card {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.card.animate-in, .testimonial-card.animate-in, .stat-card.animate-in, 
+.cert-badge.animate-in, .feature.animate-in, .difference-card.animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered animations */
+.card:nth-child(1), .difference-card:nth-child(1), .testimonial-card:nth-child(1), 
+.stat-card:nth-child(1), .cert-badge:nth-child(1), .feature:nth-child(1) { 
+  transition-delay: 0.1s; 
+}
+
+.card:nth-child(2), .difference-card:nth-child(2), .testimonial-card:nth-child(2), 
+.stat-card:nth-child(2), .cert-badge:nth-child(2), .feature:nth-child(2) { 
+  transition-delay: 0.2s; 
+}
+
+.card:nth-child(3), .difference-card:nth-child(3), .testimonial-card:nth-child(3), 
+.stat-card:nth-child(3), .cert-badge:nth-child(3), .feature:nth-child(3) { 
+  transition-delay: 0.3s; 
+}
+
+.card:nth-child(4), .difference-card:nth-child(4), .testimonial-card:nth-child(4), 
+.stat-card:nth-child(4), .cert-badge:nth-child(4), .feature:nth-child(4) { 
+  transition-delay: 0.4s; 
+}
 
 /* The Granix Difference section styles */
 .difference-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 16px 40px rgba(0,0,0,.14); }

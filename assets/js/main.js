@@ -677,7 +677,6 @@ if (toggle && nav) {
     }
   });
   
-  // Close menu when clicking the close button (×) in mobile menu
   // Close menu when clicking outside the menu
   document.addEventListener('click', (e) => {
     if (nav.getAttribute('data-open') === 'true' && 
@@ -707,30 +706,56 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize number counters
   initNumberCounters();
+  
+  // Initialize scroll animations
+  initScrollAnimations();
 });
 
 // Function to animate numbers in stat cards
 function initNumberCounters() {
   const statNumbers = document.querySelectorAll('.stat-number');
   
-  statNumbers.forEach((stat, index) => {
-    const finalValue = stat.textContent.trim();
-    
-    // Extract the numeric part
-    const numericPart = finalValue.match(/[\d.]+/);
-    if (numericPart) {
-      const number = parseFloat(numericPart[0]);
-      const suffix = finalValue.replace(numericPart[0], '');
-      
-      // Reset the number to 0
-      stat.textContent = '0' + suffix;
-      
-      // Delay each counter slightly
-      setTimeout(() => {
-        animateNumber(stat, 0, number, 2000, suffix);
-      }, index * 300);
-    }
+  // Store original values
+  statNumbers.forEach(stat => {
+    stat.setAttribute('data-original', stat.textContent.trim());
   });
+  
+  // Reset all numbers to 0
+  statNumbers.forEach(stat => {
+    stat.textContent = '0';
+  });
+  
+  // Create an Intersection Observer to trigger animations when stats section is in view
+  const statsSection = document.querySelector('.stats-section');
+  if (statsSection) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Start animations when section is in view
+          statNumbers.forEach((stat, index) => {
+            const finalValue = stat.getAttribute('data-original');
+            
+            // Extract the numeric part
+            const numericPart = finalValue.match(/[\d.]+/);
+            if (numericPart) {
+              const number = parseFloat(numericPart[0]);
+              const suffix = finalValue.replace(numericPart[0], '');
+              
+              // Delay each counter slightly
+              setTimeout(() => {
+                animateNumber(stat, 0, number, 2000, suffix);
+              }, index * 200);
+            }
+          });
+          
+          // Stop observing after animation starts
+          observer.unobserve(statsSection);
+        }
+      });
+    }, { threshold: 0.5 }); // Trigger when 50% of the section is visible
+    
+    observer.observe(statsSection);
+  }
 }
 
 // Function to animate a number from start to end value
@@ -755,4 +780,32 @@ function animateNumber(element, start, end, duration, suffix = '') {
   }
   
   requestAnimationFrame(updateNumber);
+}
+
+// Function to initialize scroll animations for professional website effects
+function initScrollAnimations() {
+  // Add scroll animation to cards and other elements
+  const animatedElements = document.querySelectorAll(
+    '.card, .difference-card, .testimonial-card, .cert-badge, .feature, .stat-card'
+  );
+  
+  // Add animation classes to elements
+  animatedElements.forEach(element => {
+    element.classList.add('scroll-animate');
+  });
+  
+  // Create Intersection Observer for scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('animate-in');
+        observer.unobserve(entry.target); // Stop observing after animation
+      }
+    });
+  }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+  
+  // Observe all animated elements
+  animatedElements.forEach(element => {
+    observer.observe(element);
+  });
 }
