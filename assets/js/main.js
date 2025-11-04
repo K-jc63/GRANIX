@@ -678,30 +678,6 @@ if (toggle && nav) {
   });
   
   // Close menu when clicking the close button (×) in mobile menu
-  document.addEventListener('click', (e) => {
-    // Check if we're on mobile view and menu is open
-    if (window.innerWidth <= 720 && nav.getAttribute('data-open') === 'true') {
-      const navMenu = nav.querySelector('ul');
-      if (navMenu) {
-        const rect = navMenu.getBoundingClientRect();
-        const closeBtnArea = {
-          x: rect.right - 70, // 50px for button + 20px padding
-          y: rect.top + 20,
-          width: 50,
-          height: 50
-        };
-        
-        // Check if click is on the close button area
-        if (e.clientX >= closeBtnArea.x && e.clientX <= closeBtnArea.x + closeBtnArea.width &&
-            e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
-          nav.setAttribute('data-open', 'false');
-          toggle.setAttribute('aria-expanded', 'false');
-          document.body.style.overflow = '';
-        }
-      }
-    }
-  });
-  
   // Close menu when clicking outside the menu
   document.addEventListener('click', (e) => {
     if (nav.getAttribute('data-open') === 'true' && 
