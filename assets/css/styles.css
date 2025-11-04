@@ -90,6 +90,9 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
     font-weight: 600;
     color: var(--brand-600);
     transition: all 0.3s ease;
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
   
   .nav-toggle[aria-expanded="true"] span {
