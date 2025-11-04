@@ -1,5 +1,124 @@
+// Mobile nav toggle
+const nav = document.querySelector('.site-nav');
+const toggle = document.querySelector('.nav-toggle');
+
+// Current year in footer
+const yearEl = document.getElementById('year');
+if (yearEl) {
+  yearEl.textContent = String(new Date().getFullYear());
+}
+
+// Language selector functionality with full translation support
+const langToggle = document.getElementById('langToggle');
+
+// Initialize language functionality
+function initLanguage() {
+  // Get saved language preference or default to English
+  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+  
+  console.log('Initializing language with:', currentLang);
+  
+  // Update UI to show current language
+  const langText = langToggle.querySelector('.lang-text');
+  if (langText) {
+    langText.textContent = currentLang === 'AR' ? 'العربية' : currentLang;
+  }
+  
+  // Apply RTL for Arabic if needed
+  if (currentLang === 'AR') {
+    document.documentElement.setAttribute('dir', 'rtl');
+    document.documentElement.setAttribute('lang', 'ar');
+  } else {
+    document.documentElement.setAttribute('dir', 'ltr');
+    document.documentElement.setAttribute('lang', 'en');
+  }
+  
+  // Load translations for current language
+  loadTranslations(currentLang);
+  
+  // Set up language toggle event listener
+  if (langToggle) {
+    langToggle.addEventListener('click', () => {
+      // Toggle between EN and AR
+      const newLang = currentLang === 'EN' ? 'AR' : 'EN';
+      
+      console.log('Switching language to:', newLang);
+      
+      // Save preference
+      localStorage.setItem('preferredLanguage', newLang);
+      
+      // Update current language
+      currentLang = newLang;
+      
+      // Update UI
+      if (langText) {
+        langText.textContent = currentLang === 'AR' ? 'العربية' : 'EN';
+      }
+      
+      // Apply RTL for Arabic
+      if (currentLang === 'AR') {
+        document.documentElement.setAttribute('dir', 'rtl');
+        document.documentElement.setAttribute('lang', 'ar');
+      } else {
+        document.documentElement.setAttribute('dir', 'ltr');
+        document.documentElement.setAttribute('lang', 'en');
+      }
+      
+      // Load and apply translations
+      loadTranslations(currentLang);
+    });
+  }
+}
+
+// Load translations
+async function loadTranslations(lang) {
+  try {
+    console.log('Loading translations for:', lang);
+    const response = await fetch(`lang/${lang.toLowerCase()}.json`);
+    console.log('Translation file response:', response);
+    if (response.ok) {
+      const translations = await response.json();
+      console.log('Translations loaded:', translations);
+      applyTranslations(translations, lang);
+      return true;
+    } else {
+      console.warn(`Failed to load ${lang} translations:`, response.status);
+      // Fallback: If Arabic file fails, try to load it directly
+      if (lang === 'AR') {
+        console.log('Trying direct Arabic translation load...');
+        const fallbackResponse = await fetch('lang/ar.json');
+        if (fallbackResponse.ok) {
+          const translations = await fallbackResponse.json();
+          applyTranslations(translations, lang);
+          return true;
+        }
+      }
+    }
+  } catch (error) {
+    console.warn(`Failed to load ${lang} translations:`, error);
+    // Fallback for Arabic
+    if (lang === 'AR') {
+      console.log('Trying direct Arabic translation load due to error...');
+      try {
+        const fallbackResponse = await fetch('lang/ar.json');
+        if (fallbackResponse.ok) {
+          const translations = await fallbackResponse.json();
+          applyTranslations(translations, lang);
+          return true;
+        }
+      } catch (fallbackError) {
+        console.warn('Fallback Arabic load also failed:', fallbackError);
+      }
+    }
+  }
+  return false;
+}
+
 // Apply translations to the page
 function applyTranslations(translations, lang) {
+  console.log('Applying translations for:', lang);
+  console.log('Translations object:', translations);
+  
   // Translate navigation
   const navLinks = document.querySelectorAll('.site-nav a');
   if (navLinks.length >= 6) {
@@ -529,11 +648,11 @@ function applyTranslations(translations, lang) {
   if (yearEl) {
     yearEl.textContent = String(new Date().getFullYear());
   }
+  
+  console.log('Translations applied successfully');
 }
 
-// Mobile nav toggle
-const nav = document.querySelector('.site-nav');
-const toggle = document.querySelector('.nav-toggle');
+// Initialize mobile menu functionality
 if (toggle && nav) {
   toggle.addEventListener('click', () => {
     const isOpen = nav.getAttribute('data-open') === 'true';
@@ -559,23 +678,26 @@ if (toggle && nav) {
   });
   
   // Close menu when clicking the close button (×) in mobile menu
-  nav.addEventListener('click', (e) => {
-    const target = e.target;
-    if (target && target.parentNode && target.parentNode.tagName === 'UL') {
-      // Check if clicked on the close button (pseudo element)
-      const rect = target.parentNode.getBoundingClientRect();
-      const closeBtnArea = {
-        x: rect.right - 70, // 50px for button + 20px padding
-        y: rect.top + 20,
-        width: 50,
-        height: 50
-      };
-      
-      if (e.clientX >= closeBtnArea.x && e.clientX <= closeBtnArea.x + closeBtnArea.width &&
-          e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
-        nav.setAttribute('data-open', 'false');
-        toggle.setAttribute('aria-expanded', 'false');
-        document.body.style.overflow = '';
+  document.addEventListener('click', (e) => {
+    // Check if we're on mobile view and menu is open
+    if (window.innerWidth <= 720 && nav.getAttribute('data-open') === 'true') {
+      const navMenu = nav.querySelector('ul');
+      if (navMenu) {
+        const rect = navMenu.getBoundingClientRect();
+        const closeBtnArea = {
+          x: rect.right - 70, // 50px for button + 20px padding
+          y: rect.top + 20,
+          width: 50,
+          height: 50
+        };
+        
+        // Check if click is on the close button area
+        if (e.clientX >= closeBtnArea.x && e.clientX <= closeBtnArea.x + closeBtnArea.width &&
+            e.clientY >= closeBtnArea.y && e.clientY <= closeBtnArea.y + closeBtnArea.height) {
+          nav.setAttribute('data-open', 'false');
+          toggle.setAttribute('aria-expanded', 'false');
+          document.body.style.overflow = '';
+        }
       }
     }
   });
@@ -602,79 +724,59 @@ if (toggle && nav) {
   });
 }
 
-// Current year in footer
-const yearEl = document.getElementById('year');
-if (yearEl) {
-  yearEl.textContent = String(new Date().getFullYear());
-}
+// Initialize language functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing language');
+  initLanguage();
+  
+  // Initialize number counters
+  initNumberCounters();
+});
 
-// Language selector functionality with full translation support
-const langToggle = document.getElementById('langToggle');
-
-// Initialize language functionality
-function initLanguage() {
-  // Get saved language preference or default to English
-  let currentLang = localStorage.getItem('preferredLanguage') || 'EN';
+// Function to animate numbers in stat cards
+function initNumberCounters() {
+  const statNumbers = document.querySelectorAll('.stat-number');
   
-  // Update UI to show current language
-  const langText = langToggle.querySelector('.lang-text');
-  if (langText) langText.textContent = currentLang;
-  
-  // Apply RTL for Arabic if needed
-  if (currentLang === 'AR') {
-    document.documentElement.setAttribute('dir', 'rtl');
-    document.documentElement.setAttribute('lang', 'ar');
-  } else {
-    document.documentElement.setAttribute('dir', 'ltr');
-    document.documentElement.setAttribute('lang', 'en');
-  }
-  
-  // Load translations for current language
-  loadTranslations(currentLang);
-  
-  // Set up language toggle event listener
-  if (langToggle) {
-    langToggle.addEventListener('click', () => {
-      // Toggle between EN and AR
-      const newLang = currentLang === 'EN' ? 'AR' : 'EN';
+  statNumbers.forEach((stat, index) => {
+    const finalValue = stat.textContent.trim();
+    
+    // Extract the numeric part
+    const numericPart = finalValue.match(/[\d.]+/);
+    if (numericPart) {
+      const number = parseFloat(numericPart[0]);
+      const suffix = finalValue.replace(numericPart[0], '');
       
-      // Save preference
-      localStorage.setItem('preferredLanguage', newLang);
+      // Reset the number to 0
+      stat.textContent = '0' + suffix;
       
-      // Update current language
-      currentLang = newLang;
-      
-      // Update UI
-      if (langText) langText.textContent = currentLang;
-      
-      // Apply RTL for Arabic
-      if (currentLang === 'AR') {
-        document.documentElement.setAttribute('dir', 'rtl');
-        document.documentElement.setAttribute('lang', 'ar');
-      } else {
-        document.documentElement.setAttribute('dir', 'ltr');
-        document.documentElement.setAttribute('lang', 'en');
-      }
-      
-      // Load and apply translations
-      loadTranslations(currentLang);
-    });
-  }
-}
-
-// Load translations
-async function loadTranslations(lang) {
-  try {
-    const response = await fetch(`lang/${lang.toLowerCase()}.json`);
-    if (response.ok) {
-      const translations = await response.json();
-      applyTranslations(translations, lang);
-      return true;
-    } else {
-      console.warn(`Failed to load ${lang} translations:`, response.status);
+      // Delay each counter slightly
+      setTimeout(() => {
+        animateNumber(stat, 0, number, 2000, suffix);
+      }, index * 300);
     }
-  } catch (error) {
-    console.warn(`Failed to load ${lang} translations:`, error);
+  });
+}
+
+// Function to animate a number from start to end value
+function animateNumber(element, start, end, duration, suffix = '') {
+  const startTime = performance.now();
+  
+  function updateNumber(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    
+    // Use easing function for smoother animation
+    const easeOutQuad = 1 - Math.pow(1 - progress, 2);
+    const currentValue = Math.floor(start + (end - start) * easeOutQuad);
+    
+    element.textContent = currentValue + suffix;
+    
+    if (progress < 1) {
+      requestAnimationFrame(updateNumber);
+    } else {
+      element.textContent = end + suffix;
+    }
   }
-  return false;
+  
+  requestAnimationFrame(updateNumber);
 }
