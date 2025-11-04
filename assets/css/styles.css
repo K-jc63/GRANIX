@@ -85,39 +85,15 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   }
   .nav-toggle:active { transform: scale(0.95); }
   
-  /* Hamburger icon styling */
-  .nav-toggle::before {
-    content: "";
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: var(--brand-600);
-    border-radius: 2px;
-    box-shadow: 
-      0 6px 0 0 var(--brand-600),
-      0 12px 0 0 var(--brand-600);
+  /* Menu text styling */
+  .nav-toggle span {
+    font-weight: 600;
+    color: var(--brand-600);
     transition: all 0.3s ease;
   }
   
-  .nav-toggle[aria-expanded="true"]::before {
-    background: transparent;
-    box-shadow: 
-      0 0 0 0 var(--brand-600),
-      0 0 0 0 var(--brand-600);
-    transform: rotate(45deg);
-  }
-  
-  .nav-toggle[aria-expanded="true"]::after {
-    content: "";
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background: var(--brand-600);
-    border-radius: 2px;
-    transform: rotate(-90deg);
-    left: 14px;
-    top: 20px;
-    transition: all 0.3s ease;
+  .nav-toggle[aria-expanded="true"] span {
+    color: var(--accent);
   }
   
   .header-controls { gap: 12px; }
