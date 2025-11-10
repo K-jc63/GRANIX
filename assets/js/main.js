@@ -8,6 +8,165 @@ if (yearEl) {
   yearEl.textContent = String(new Date().getFullYear());
 }
 
+// Slider functionality
+function initSlider() {
+  const slider = document.querySelector('.slider');
+  if (!slider) return;
+  
+  const sliderTrack = slider.querySelector('.slider-track');
+  const slides = slider.querySelectorAll('.slide');
+  const prevBtn = slider.querySelector('.prev');
+  const nextBtn = slider.querySelector('.next');
+  const dotsContainer = slider.querySelector('.slider-dots');
+  
+  if (!sliderTrack || !slides.length) return;
+  
+  let currentIndex = 0;
+  let slideCount = slides.length;
+  let autoplayInterval;
+  const autoplayEnabled = slider.hasAttribute('data-slider') && slider.getAttribute('data-slider') === 'autoplay';
+  const autoplaySpeed = 5000; // 5 seconds
+  
+  // Create dots
+  if (dotsContainer) {
+    dotsContainer.innerHTML = '';
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.setAttribute('aria-label', `Slide ${index + 1}`);
+      dot.setAttribute('data-slide', index);
+      if (index === 0) {
+        dot.setAttribute('aria-current', 'true');
+        dot.classList.add('active');
+      }
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+  }
+  
+  // Update dots
+  function updateDots() {
+    if (!dotsContainer) return;
+    const dots = dotsContainer.querySelectorAll('button');
+    dots.forEach((dot, index) => {
+      if (index === currentIndex) {
+        dot.setAttribute('aria-current', 'true');
+        dot.classList.add('active');
+      } else {
+        dot.removeAttribute('aria-current');
+        dot.classList.remove('active');
+      }
+    });
+  }
+  
+  // Go to specific slide
+  function goToSlide(index) {
+    if (index < 0) {
+      currentIndex = slideCount - 1;
+    } else if (index >= slideCount) {
+      currentIndex = 0;
+    } else {
+      currentIndex = index;
+    }
+    
+    // Move slider track
+    const translateX = -currentIndex * 100;
+    sliderTrack.style.transform = `translateX(${translateX}%)`;
+    
+    // Update active slide
+    slides.forEach((slide, index) => {
+      if (index === currentIndex) {
+        slide.classList.add('active');
+      } else {
+        slide.classList.remove('active');
+      }
+    });
+    
+    updateDots();
+    resetAutoplay();
+  }
+  
+  // Next slide
+  function nextSlide() {
+    goToSlide(currentIndex + 1);
+  }
+  
+  // Previous slide
+  function prevSlide() {
+    goToSlide(currentIndex - 1);
+  }
+  
+  // Reset autoplay timer
+  function resetAutoplay() {
+    if (autoplayEnabled && autoplayInterval) {
+      clearInterval(autoplayInterval);
+      startAutoplay();
+    }
+  }
+  
+  // Start autoplay
+  function startAutoplay() {
+    if (!autoplayEnabled) return;
+    autoplayInterval = setInterval(nextSlide, autoplaySpeed);
+  }
+  
+  // Stop autoplay
+  function stopAutoplay() {
+    if (autoplayInterval) {
+      clearInterval(autoplayInterval);
+    }
+  }
+  
+  // Event listeners
+  if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+  if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+  
+  // Touch/swipe support
+  let startX = 0;
+  let endX = 0;
+  
+  slider.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+  });
+  
+  slider.addEventListener('touchmove', (e) => {
+    endX = e.touches[0].clientX;
+  });
+  
+  slider.addEventListener('touchend', () => {
+    const threshold = 50;
+    const diff = startX - endX;
+    
+    if (Math.abs(diff) > threshold) {
+      if (diff > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+  });
+  
+  // Pause autoplay on hover
+  slider.addEventListener('mouseenter', stopAutoplay);
+  slider.addEventListener('mouseleave', startAutoplay);
+  
+  // Initialize
+  updateDots();
+  if (autoplayEnabled) startAutoplay();
+  
+  // Add loaded class to slides for animation
+  setTimeout(() => {
+    slides.forEach(slide => {
+      slide.classList.add('loaded');
+    });
+  }, 100);
+}
+
 // Language selector functionality with full translation support
 const langToggle = document.getElementById('langToggle');
 
@@ -703,6 +862,9 @@ if (toggle && nav) {
 document.addEventListener('DOMContentLoaded', () => {
   console.log('DOM loaded, initializing language');
   initLanguage();
+  
+  // Initialize slider
+  initSlider();
   
   // Initialize number counters
   initNumberCounters();
