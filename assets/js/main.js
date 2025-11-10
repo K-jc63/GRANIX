@@ -17,7 +17,7 @@ function initSlider() {
   const slides = slider.querySelectorAll('.slide');
   const prevBtn = slider.querySelector('.prev');
   const nextBtn = slider.querySelector('.next');
-  const dotsContainer = slider.querySelector('.slider-dots');
+  const dotsContainer = null; // Removed dots functionality
   
   if (!sliderTrack || !slides.length) return;
   
@@ -27,36 +27,9 @@ function initSlider() {
   const autoplayEnabled = slider.hasAttribute('data-slider') && slider.getAttribute('data-slider') === 'autoplay';
   const autoplaySpeed = 5000; // 5 seconds
   
-  // Create dots
-  if (dotsContainer) {
-    dotsContainer.innerHTML = '';
-    slides.forEach((_, index) => {
-      const dot = document.createElement('button');
-      dot.setAttribute('aria-label', `Slide ${index + 1}`);
-      dot.setAttribute('data-slide', index);
-      if (index === 0) {
-        dot.setAttribute('aria-current', 'true');
-        dot.classList.add('active');
-      }
-      dot.addEventListener('click', () => goToSlide(index));
-      dotsContainer.appendChild(dot);
-    });
-  }
+  // Dots functionality removed
   
-  // Update dots
-  function updateDots() {
-    if (!dotsContainer) return;
-    const dots = dotsContainer.querySelectorAll('button');
-    dots.forEach((dot, index) => {
-      if (index === currentIndex) {
-        dot.setAttribute('aria-current', 'true');
-        dot.classList.add('active');
-      } else {
-        dot.removeAttribute('aria-current');
-        dot.classList.remove('active');
-      }
-    });
-  }
+  // Update dots function removed
   
   // Go to specific slide
   function goToSlide(index) {
@@ -81,7 +54,6 @@ function initSlider() {
       }
     });
     
-    updateDots();
     resetAutoplay();
   }
   
@@ -156,7 +128,6 @@ function initSlider() {
   slider.addEventListener('mouseleave', startAutoplay);
   
   // Initialize
-  updateDots();
   if (autoplayEnabled) startAutoplay();
   
   // Add loaded class to slides for animation
