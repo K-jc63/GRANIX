@@ -508,24 +508,21 @@ function applyTranslations(translations, lang) {
     
     // Translate testimonial content
     const testimonialTexts = document.querySelectorAll('.testimonial-text');
-    if (testimonialTexts.length >= 3) {
+    if (testimonialTexts.length >= 2) {
       testimonialTexts[0].textContent = translations.testimonial_1 || testimonialTexts[0].textContent;
       testimonialTexts[1].textContent = translations.testimonial_2 || testimonialTexts[1].textContent;
-      testimonialTexts[2].textContent = translations.testimonial_3 || testimonialTexts[2].textContent;
     }
     
     const testimonialAuthors = document.querySelectorAll('.testimonial-author strong');
-    if (testimonialAuthors.length >= 3) {
+    if (testimonialAuthors.length >= 2) {
       testimonialAuthors[0].textContent = translations.testimonial_author_1 || testimonialAuthors[0].textContent;
       testimonialAuthors[1].textContent = translations.testimonial_author_2 || testimonialAuthors[1].textContent;
-      testimonialAuthors[2].textContent = translations.testimonial_author_3 || testimonialAuthors[2].textContent;
     }
     
     const testimonialLocations = document.querySelectorAll('.testimonial-author span');
-    if (testimonialLocations.length >= 3) {
+    if (testimonialLocations.length >= 2) {
       testimonialLocations[0].textContent = translations.testimonial_location_1 || testimonialLocations[0].textContent;
       testimonialLocations[1].textContent = translations.testimonial_location_2 || testimonialLocations[1].textContent;
-      testimonialLocations[2].textContent = translations.testimonial_location_3 || testimonialLocations[2].textContent;
     }
   }
   
