@@ -35,7 +35,7 @@ input, button, textarea, select { font: inherit; }
 
 .site-header { background: rgba(255,255,255,.92); backdrop-filter: saturate(180%) blur(12px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 20; box-shadow: 0 2px 12px rgba(0,0,0,.04); transition: all 0.3s ease; }
 .site-header.scrolled { background: rgba(255,255,255,.96); box-shadow: 0 4px 20px rgba(0,0,0,.08); }
-.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; }
+.header-inner { display: flex; align-items: center; justify-content: space-between; padding: 16px 0; position: relative; }
 .header-controls { display: flex; align-items: center; gap: 20px; }
 .logo { text-decoration: none; font-weight: 800; color: var(--brand); font-size: 1.4rem; letter-spacing: -0.5px; transition: all 0.3s ease; display: flex; align-items: center; }
 .logo:hover { color: var(--accent-600); transform: scale(1.05); }
@@ -66,14 +66,14 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   .nav-toggle { 
     display: inline-flex; 
     align-items: center; 
-    gap: 8px; 
+    justify-content: center;
+    width: 40px;
+    height: 40px;
     border: 1px solid var(--border); 
     background: var(--bg); 
-    padding: 10px 14px; 
-    border-radius: 10px; 
+    border-radius: 8px; 
     cursor: pointer; 
     transition: all 0.3s ease; 
-    font-weight: 600; 
     position: relative;
     z-index: 101;
     box-shadow: 0 2px 8px rgba(0,0,0,.05);
@@ -82,23 +82,8 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
     background: var(--bg-alt); 
     border-color: var(--brand); 
     box-shadow: 0 4px 12px rgba(14,74,60,.1); 
-    transform: translateY(-2px);
   }
   .nav-toggle:active { transform: scale(0.95); }
-  
-  /* Menu text styling */
-  .nav-toggle span {
-    font-weight: 600;
-    color: var(--brand-600);
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-  
-  .nav-toggle[aria-expanded="true"] span {
-    color: var(--accent);
-  }
   
   /* Hamburger icon styling */
   .nav-toggle::before {
@@ -127,8 +112,8 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
     border-radius: 2px;
     position: absolute;
     top: 50%;
-    left: 14px;
-    transform: translateY(-50%) rotate(-45deg);
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
   }
   
   .header-controls { gap: 12px; }
@@ -151,7 +136,7 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
     opacity: 0;
     visibility: hidden;
     transform: translateY(-20px);
-    transition: all 0.4s cubic-bezier(0.4, 0.0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
     margin-top: 8px;
   }
   
@@ -159,7 +144,7 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   .site-nav li {
     opacity: 0;
     transform: translateY(-10px);
-    transition: all 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
   }
   
   .site-nav[data-open="true"] li {
@@ -168,11 +153,11 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   }
   
   .site-nav[data-open="true"] li:nth-child(1) { transition-delay: 0.1s; }
-  .site-nav[data-open="true"] li:nth-child(2) { transition-delay: 0.2s; }
-  .site-nav[data-open="true"] li:nth-child(3) { transition-delay: 0.3s; }
-  .site-nav[data-open="true"] li:nth-child(4) { transition-delay: 0.4s; }
-  .site-nav[data-open="true"] li:nth-child(5) { transition-delay: 0.5s; }
-  .site-nav[data-open="true"] li:nth-child(6) { transition-delay: 0.6s; }
+  .site-nav[data-open="true"] li:nth-child(2) { transition-delay: 0.15s; }
+  .site-nav[data-open="true"] li:nth-child(3) { transition-delay: 0.2s; }
+  .site-nav[data-open="true"] li:nth-child(4) { transition-delay: 0.25s; }
+  .site-nav[data-open="true"] li:nth-child(5) { transition-delay: 0.3s; }
+  .site-nav[data-open="true"] li:nth-child(6) { transition-delay: 0.35s; }
   .site-nav[data-open="true"] ul { 
     display: flex; 
     opacity: 1;
