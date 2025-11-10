@@ -167,6 +167,33 @@ function initSlider() {
   }, 100);
 }
 
+// Video mute toggle functionality
+function initVideoControls() {
+  const video = document.getElementById('extractionVideo');
+  const muteBtn = document.getElementById('muteToggle');
+  const muteIcon = document.querySelector('.mute-icon');
+  const muteText = document.querySelector('.mute-text');
+  
+  if (!video || !muteBtn) return;
+  
+  // Set initial state
+  video.muted = true;
+  
+  // Toggle mute on button click
+  muteBtn.addEventListener('click', () => {
+    video.muted = !video.muted;
+    
+    // Update button text and icon
+    if (video.muted) {
+      muteIcon.textContent = '🔊';
+      muteText.textContent = 'Sound Off';
+    } else {
+      muteIcon.textContent = '🔇';
+      muteText.textContent = 'Sound On';
+    }
+  });
+}
+
 // Language selector functionality with full translation support
 const langToggle = document.getElementById('langToggle');
 
@@ -865,6 +892,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Initialize slider
   initSlider();
+  
+  // Initialize video controls
+  initVideoControls();
   
   // Initialize number counters
   initNumberCounters();

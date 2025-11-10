@@ -157,6 +157,48 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   .site-nav li { width: 100%; text-align: center; }
 }
 
+/* Video Hero Section */
+.video-hero { position: relative; width: 100%; height: 500px; overflow: hidden; }
+.video-container { position: relative; width: 100%; height: 100%; }
+.video-container video { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  display: block;
+}
+.video-overlay { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%; 
+  display: flex; 
+  align-items: flex-end; 
+  justify-content: flex-end; 
+  padding: 20px;
+}
+.mute-btn { 
+  background: rgba(14, 74, 60, 0.75); 
+  backdrop-filter: blur(8px); 
+  border: 1px solid rgba(255, 255, 255, 0.4); 
+  color: #fff; 
+  padding: 12px 20px; 
+  border-radius: 999px; 
+  cursor: pointer; 
+  font-weight: 600; 
+  display: flex; 
+  align-items: center; 
+  gap: 8px; 
+  box-shadow: 0 8px 20px rgba(14, 74, 60, 0.4); 
+  transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1); 
+}
+.mute-btn:hover { 
+  background: rgba(10, 58, 47, 0.9); 
+  transform: scale(1.05); 
+  box-shadow: 0 12px 28px rgba(14, 74, 60, 0.5); 
+}
+.mute-btn:active { transform: scale(0.95); }
+
 .hero { background: radial-gradient(1200px 400px at 50% -200px, rgba(212,163,115,.25), transparent 60%), linear-gradient(180deg, #ffffff, #f7faf9); padding: 90px 0; text-align: center; position: relative; overflow: hidden; }
 .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 100%; background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(14,74,60,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>'); opacity: 0.4; }
 .hero .container { position: relative; z-index: 1; }
@@ -542,6 +584,10 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   .display-item {
     padding: 20px;
   }
+  
+  .video-hero {
+    height: 300px;
+  }
 }
 
 @media (max-width: 480px) {
@@ -597,6 +643,19 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
   .cert-badge {
     width: 100%;
     max-width: 300px;
+  }
+  
+  .video-hero {
+    height: 250px;
+  }
+  
+  .video-overlay {
+    padding: 15px;
+  }
+  
+  .mute-btn {
+    padding: 10px 16px;
+    font-size: 0.9rem;
   }
 }
 
