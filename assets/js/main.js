@@ -173,11 +173,47 @@ function initVideoControls() {
   const muteBtn = document.getElementById('muteToggle');
   const muteIcon = document.querySelector('.mute-icon');
   const muteText = document.querySelector('.mute-text');
+  const videoLoading = document.getElementById('videoLoading');
   
   if (!video || !muteBtn) return;
   
   // Set initial state
   video.muted = true;
+  
+  // Hide loading indicator when video starts playing
+  video.addEventListener('playing', () => {
+    if (videoLoading) {
+      videoLoading.classList.add('hidden');
+    }
+  });
+  
+  // Hide loading indicator if video can play
+  video.addEventListener('canplay', () => {
+    if (videoLoading) {
+      videoLoading.classList.add('hidden');
+    }
+  });
+  
+  // Handle video loading errors
+  video.addEventListener('error', (e) => {
+    console.error('Video error:', e);
+    // Try to reload the video
+    setTimeout(() => {
+      video.load();
+    }, 3000);
+    
+    // Hide loading indicator on error
+    if (videoLoading) {
+      videoLoading.classList.add('hidden');
+    }
+  });
+  
+  // Fallback: Hide loading indicator after 5 seconds
+  setTimeout(() => {
+    if (videoLoading) {
+      videoLoading.classList.add('hidden');
+    }
+  }, 5000);
   
   // Toggle mute on button click
   muteBtn.addEventListener('click', () => {
