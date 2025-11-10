@@ -367,7 +367,7 @@ html[dir='rtl'] .lang-text { font-size: 0.9rem; letter-spacing: 0; }
 
 /* Company profile styles */
 .profile-cover { position: relative; color: #fff; padding: 84px 0; background: #0a3a2f; }
-.profile-cover::before { content: ""; position: absolute; inset: 0; background: url('../IMG-20251010-WA0008.jpg') center/cover no-repeat; opacity: .45; }
+.profile-cover::before { content: ""; position: absolute; inset: 0; background: url('../logo.png') center/cover no-repeat; opacity: .45; }
 .profile-cover::after { content: ""; position: absolute; inset: 0; background: radial-gradient(800px 240px at 50% -60px, rgba(212,163,115,.35), transparent 60%), linear-gradient(180deg, rgba(0,0,0,.45), rgba(0,0,0,.35)); }
 .profile-cover .container { position: relative; }
 .profile-cover h1 { margin: 0 0 6px; font-size: clamp(2rem, 5vw, 3rem); }
