@@ -145,6 +145,7 @@ function initVideoControls() {
   const muteIcon = document.querySelector('.mute-icon');
   const muteText = document.querySelector('.mute-text');
   const videoLoading = document.getElementById('videoLoading');
+  const videoFallback = document.querySelector('.video-fallback');
   
   if (!video || !muteBtn) return;
   
@@ -168,10 +169,10 @@ function initVideoControls() {
   // Handle video loading errors
   video.addEventListener('error', (e) => {
     console.error('Video error:', e);
-    // Try to reload the video
-    setTimeout(() => {
-      video.load();
-    }, 3000);
+    // Show fallback image
+    if (videoFallback) {
+      videoFallback.style.display = 'block';
+    }
     
     // Hide loading indicator on error
     if (videoLoading) {
@@ -179,12 +180,15 @@ function initVideoControls() {
     }
   });
   
-  // Fallback: Hide loading indicator after 5 seconds
+  // Fallback: Show fallback image after 8 seconds if video hasn't loaded
   setTimeout(() => {
-    if (videoLoading) {
+    if (videoLoading && !videoLoading.classList.contains('hidden')) {
+      if (videoFallback) {
+        videoFallback.style.display = 'block';
+      }
       videoLoading.classList.add('hidden');
     }
-  }, 5000);
+  }, 8000);
   
   // Toggle mute on button click
   muteBtn.addEventListener('click', () => {
@@ -259,8 +263,49 @@ function initLanguage() {
       
       // Load and apply translations
       loadTranslations(currentLang);
+      
+      // Update region-specific content
+      updateRegionSpecificContent(currentLang);
     });
   }
+}
+
+// Update region-specific content based on language/region
+function updateRegionSpecificContent(lang) {
+  // Update phone numbers based on region
+  const internationalPhone = document.querySelector('a[href="https://wa.me/971581968890"]');
+  const eastAfricaPhone = document.querySelector('a[href="https://wa.me/256708331185"]');
+  
+  if (lang === 'AR') {
+    if (internationalPhone) {
+      internationalPhone.innerHTML = `📱 +971 58 196 8890<span style="font-size: 0.9em; color: var(--muted);">(دولي)</span>`;
+    }
+    if (eastAfricaPhone) {
+      eastAfricaPhone.innerHTML = `📱 +256 708 331 185<span style="font-size: 0.9em; color: var(--muted);">(شرق أفريقيا)</span>`;
+    }
+  } else {
+    if (internationalPhone) {
+      internationalPhone.innerHTML = `📱 +971 58 196 8890<span style="font-size: 0.9em; color: var(--muted);">(International)</span>`;
+    }
+    if (eastAfricaPhone) {
+      eastAfricaPhone.innerHTML = `📱 +256 708 331 185<span style="font-size: 0.9em; color: var(--muted);">(East Africa)</span>`;
+    }
+  }
+  
+  // Update contact information based on region
+  const contactSections = document.querySelectorAll('.contact-info, .profile-contact');
+  contactSections.forEach(section => {
+    const phoneLinks = section.querySelectorAll('a[href^="tel:"]');
+    if (phoneLinks.length >= 2) {
+      if (lang === 'AR') {
+        phoneLinks[0].nextSibling.textContent = ' (دولي)';
+        phoneLinks[1].nextSibling.textContent = ' (شرق أفريقيا)';
+      } else {
+        phoneLinks[0].nextSibling.textContent = ' (International)';
+        phoneLinks[1].nextSibling.textContent = ' (East Africa)';
+      }
+    }
+  });
 }
 
 // Load translations

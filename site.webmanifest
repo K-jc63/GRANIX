@@ -1,0 +1,21 @@
+{
+  "name": "Granix Prime Stones",
+  "short_name": "Granix Stones",
+  "description": "Premium natural stone for iconic architecture projects worldwide",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#0e4a3c",
+  "icons": [
+    {
+      "src": "logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

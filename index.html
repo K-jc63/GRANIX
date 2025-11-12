@@ -3,15 +3,41 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Granix Prime Stones | The Foundation of Grandeur</title>
-  <meta name="description" content="The Earth's rarest stone, curated for iconic architecture. Global suppliers of exceptional granite, marble, and quartz for visionary projects worldwide. From the Gulf to Europe to Asia.">
+  <title>Granix Prime Stones | Premium Natural Stone for Iconic Architecture</title>
+  <meta name="description" content="Ethically sourced premium granite, marble, and quartz for visionary architecture projects worldwide. 15+ years of excellence across 25+ countries. Request your complimentary slab consultation today.">
+  
+  <!-- Favicon and touch icons -->
   <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="apple-touch-icon" href="logo.png">
+  <link rel="manifest" href="site.webmanifest">
+  
   <link rel="stylesheet" href="assets/css/styles.css">
-  <meta property="og:title" content="Granix Prime Stones | The Foundation of Grandeur">
-  <meta property="og:description" content="The Earth's rarest stone, curated for iconic architecture. Global suppliers of premium natural stone.">
+  
+  <!-- Enhanced SEO meta tags -->
+  <meta name="keywords" content="natural stone, granite, marble, quartz, architectural stone, stone supplier, luxury stone, stone fabrication, stone installation, ethical sourcing, sustainable stone">
+  <meta name="author" content="Granix Prime Stones Ltd">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph / Social Media Meta Tags -->
+  <meta property="og:title" content="Granix Prime Stones | Premium Natural Stone for Iconic Architecture">
+  <meta property="og:description" content="Ethically sourced premium granite, marble, and quartz for visionary architecture projects worldwide. 15+ years of excellence across 25+ countries.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="/">
-  <meta property="og:image" content="assets/img/og-placeholder.svg">
+  <meta property="og:url" content="https://k-jc63.github.io/GRANIX/">
+  <meta property="og:image" content="https://k-jc63.github.io/GRANIX/logo.png">
+  <meta property="og:image:alt" content="Granix Prime Stones Logo">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:site_name" content="Granix Prime Stones">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Granix Prime Stones | Premium Natural Stone for Iconic Architecture">
+  <meta name="twitter:description" content="Ethically sourced premium granite, marble, and quartz for visionary architecture projects worldwide.">
+  <meta name="twitter:image" content="https://k-jc63.github.io/GRANIX/logo.png">
+  <meta name="twitter:image:alt" content="Granix Prime Stones Logo">
+  <meta name="twitter:site" content="@granixstones">
   
   <!-- Schema.org Structured Data for SEO -->
   <script type="application/ld+json">
@@ -19,11 +45,11 @@
     "@context": "https://schema.org",
     "@type": "Organization",
     "name": "Granix Prime Stones",
-    "slogan": "The Foundation of Grandeur",
+    "alternateName": "Granix Prime Stones Ltd",
+    "url": "https://k-jc63.github.io/GRANIX/",
+    "logo": "https://k-jc63.github.io/GRANIX/logo.png",
     "description": "Global curators of the Earth's rarest and most extraordinary natural stone. We partner with architects, designers, and developers to bring rare geological masterpieces to the world's most visionary projects.",
-    "url": "https://granixprimestones.com",
-    "logo": "https://granixprimestones.com/logo.png",
-    "image": "https://granixprimestones.com/assets/img/og-placeholder.svg",
+    "slogan": "The Foundation of Grandeur",
     "telephone": "+971-XX-XXX-XXXX | +256-708-331-185",
     "email": "granixprimestonesltd25@gmail.com",
     "address": {
@@ -55,12 +81,45 @@
     }
   }
   </script>
+  
+  <!-- Local Business Schema for contact page linking -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Granix Prime Stones Ltd",
+    "image": "https://k-jc63.github.io/GRANIX/logo.png",
+    "telephone": "+256-708-331-185",
+    "email": "granixprimestonesltd25@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Kampala",
+      "addressCountry": "UG"
+    },
+    "url": "https://k-jc63.github.io/GRANIX/",
+    "priceRange": "$$$$",
+    "openingHoursSpecification": [
+      {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "opens": "08:00",
+        "closes": "18:00"
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <header class="site-header">
     <div class="container header-inner">
       <a class="logo" href="index.html">
-        <img src="logo.png" alt="Granix Prime Stones" class="logo-img">
+        <img src="logo.png" width="320" height="80" alt="Granix Prime Stones" class="logo-img">
       </a>
       <div class="header-controls">
         <div class="language-selector">
@@ -88,7 +147,7 @@
   <!-- Video Section -->
   <section class="video-hero">
     <div class="video-container">
-      <video id="extractionVideo" autoplay muted loop playsinline>
+      <video id="extractionVideo" autoplay muted loop playsinline preload="metadata">
         <source src="extraction-two.mp4" type="video/mp4">
         <!-- Fallback for browsers that don't support MP4 -->
         <source src="extraction-two.webm" type="video/webm">
@@ -124,62 +183,120 @@
       </div>
     </section>
 
+    <!-- Video Section with improved fallback -->
+    <section class="video-hero">
+      <div class="video-container">
+        <video id="extractionVideo" autoplay muted loop playsinline poster="logo.png" preload="metadata">
+          <source src="extraction-two.mp4" type="video/mp4">
+          <!-- Fallback for browsers that don't support MP4 -->
+          <source src="extraction-two.webm" type="video/webm">
+          <source src="extraction-two.ogg" type="video/ogg">
+          Your browser does not support the video tag.
+        </video>
+        <div class="video-overlay">
+          <div class="container">
+            <button id="muteToggle" class="btn mute-btn" aria-label="Toggle sound">
+              <span class="mute-icon">🔊</span>
+              <span class="mute-text">Sound Off</span>
+            </button>
+          </div>
+        </div>
+        <!-- Video loading indicator -->
+        <div id="videoLoading" class="video-loading">
+          <div class="loading-spinner"></div>
+          <p>Loading video...</p>
+        </div>
+        <!-- Fallback image for when video fails to load -->
+        <div class="video-fallback" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, var(--brand), var(--brand-600)); display: none; z-index: 1;">
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: white; width: 100%;">
+            <img src="logo.png" width="300" height="75" alt="Granix Prime Stones - Premium Natural Stone for Iconic Architecture" style="max-width: 300px; height: auto; margin-bottom: 20px; filter: brightness(0) invert(1);">
+            <p style="font-size: 1.2rem; max-width: 600px; margin: 0 auto;">Premium Natural Stone for Iconic Architecture</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Enhanced value propositions above the fold -->
+    <section class="container section" style="padding: 48px 0; background: var(--bg-alt); border-radius: var(--radius); margin: 24px 0;">
+      <div style="text-align: center; max-width: 900px; margin: 0 auto;">
+        <h2 style="font-size: clamp(1.75rem, 3vw, 2.25rem); margin-bottom: 16px; color: var(--brand-600);">Ethically Sourced Natural Stone for Visionary Architecture</h2>
+        <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7; margin-bottom: 32px;">Trusted by iconic projects across 25+ countries for our commitment to quality, sustainability, and craftsmanship.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-top: 32px;">
+          <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center;">
+            <div style="width: 60px; height: 60px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; color: #fff;">🛡️</div>
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; color: var(--brand);">Unmatched Durability</h3>
+            <p style="margin: 0; line-height: 1.6; color: var(--muted); font-size: 0.95rem;">Proven in the world's most extreme climates</p>
+          </div>
+          <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center;">
+            <div style="width: 60px; height: 60px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; color: #fff;">💎</div>
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; color: var(--brand);">Unique Character</h3>
+            <p style="margin: 0; line-height: 1.6; color: var(--muted); font-size: 0.95rem;">One-of-a-kind pieces with natural veining</p>
+          </div>
+          <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border); text-align: center;">
+            <div style="width: 60px; height: 60px; margin: 0 auto 16px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 1.5rem; color: #fff;">🌍</div>
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; color: var(--brand);">Ethical Sourcing</h3>
+            <p style="margin: 0; line-height: 1.6; color: var(--muted); font-size: 0.95rem;">Fully traceable, responsibly sourced stone</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="container section" aria-label="Showcase">
       <div class="slider" data-slider="autoplay">
         <div class="slider-track">
           <div class="slide">
-            <img loading="lazy" src="add 1.jpg" alt="Premium granite countertop installation">
+            <img loading="lazy" src="add 1.jpg" alt="Premium granite countertop installation in luxury residential project">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 2.jpg" alt="Elegant marble bathroom vanity">
+            <img loading="lazy" src="add 2.jpg" alt="Elegant marble bathroom vanity with natural veining">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 4.jpg" alt="Luxury quartz kitchen countertop">
+            <img loading="lazy" src="add 4.jpg" alt="Luxury quartz kitchen countertop with polished finish">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 5.jpg" alt="Modern granite flooring design">
+            <img loading="lazy" src="add 5.jpg" alt="Modern granite flooring design for commercial space">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 6.jpg" alt="Contemporary wall cladding installation">
+            <img loading="lazy" src="add 6.jpg" alt="Contemporary wall cladding installation with natural stone">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 8.jpg" alt="Sophisticated staircase stone finish">
+            <img loading="lazy" src="add 8.jpg" alt="Sophisticated staircase stone finish with premium granite">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 9.jpg" alt="Premium outdoor walkway paving">
+            <img loading="lazy" src="add 9.jpg" alt="Premium outdoor walkway paving with durable natural stone">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 10.jpg" alt="Natural granite slab close-up">
+            <img loading="lazy" src="add 10.jpg" alt="Natural granite slab close-up showing unique patterns">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 11.jpg" alt="Exquisite marble slab with natural veining">
+            <img loading="lazy" src="add 11.jpg" alt="Exquisite marble slab with natural veining and premium quality">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 12.jpg" alt="High-quality quartz surface texture">
+            <img loading="lazy" src="add 12.jpg" alt="High-quality quartz surface texture with consistent pattern">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 13.jpg" alt="Professional stone fabrication showcase">
+            <img loading="lazy" src="add 13.jpg" alt="Professional stone fabrication showcase in modern facility">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 14.jpg" alt="Luxury stone installation project">
+            <img loading="lazy" src="add 14.jpg" alt="Luxury stone installation project in high-end commercial space">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 15.jpg" alt="Custom granite feature wall">
+            <img loading="lazy" src="add 15.jpg" alt="Custom granite feature wall with unique design">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 16.jpg" alt="Premium marble flooring installation">
+            <img loading="lazy" src="add 16.jpg" alt="Premium marble flooring installation with polished finish">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 17.jpg" alt="Commercial stone project showcase">
+            <img loading="lazy" src="add 17.jpg" alt="Commercial stone project showcase in iconic building">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 18.jpg" alt="Residential granite countertop detail">
+            <img loading="lazy" src="add 18.jpg" alt="Residential granite countertop detail with waterfall edge">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 19.jpg" alt="International quality stone surfaces">
+            <img loading="lazy" src="add 19.jpg" alt="International quality stone surfaces with certification">
           </div>
           <div class="slide">
-            <img loading="lazy" src="add 20.jpg" alt="World-class stone fabrication excellence">
+            <img loading="lazy" src="add 20.jpg" alt="World-class stone fabrication excellence with precision cutting">
           </div>
         </div>
         <div class="slider-controls" aria-hidden="true">
@@ -230,20 +347,72 @@
               <p style="margin: 0 0 12px; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); font-weight: 700;">Our Promise to You</p>
               <p style="margin: 0; font-size: 1.05rem; line-height: 1.7; color: var(--text);"><strong>Transparency.</strong> Every stone is traceable to its source.<br><strong>Quality.</strong> Inspected to international standards.<br><strong>Partnership.</strong> We're with you from selection to installation.</p>
             </div>
+            
+            <!-- Added human touch with founder story -->
+            <div style="margin-top: 32px; padding: 28px; background: var(--bg); border-left: 4px solid var(--brand); border-radius: 8px; box-shadow: 0 4px 16px rgba(0,0,0,.06);">
+              <h4 style="color: var(--brand); margin: 0 0 12px; font-size: 1.25rem;">Our Founder's Vision</h4>
+              <p style="margin: 0 0 12px; font-size: 1.05rem; line-height: 1.7; color: var(--text);">Founded by stone artisans with over 20 years of experience in quarrying and fabrication, Granix Prime Stones began with a simple mission: to connect the world's most exceptional natural stone with visionary architects and designers.</p>
+              <p style="margin: 0; font-size: 1.05rem; line-height: 1.7; color: var(--text);">Our team combines traditional craftsmanship with modern technology to ensure every project receives the attention to detail it deserves.</p>
+            </div>
           </div>
           <div style="order: 2; text-align: center;">
             <div style="background: linear-gradient(135deg, var(--brand), var(--brand-600)); padding: 48px 32px; border-radius: var(--radius); box-shadow: 0 16px 48px rgba(14,74,60,.25);">
-              <img src="logo.png" alt="Granix Prime Stones - Trusted Globally" style="max-width: 100%; height: auto; max-height: 240px; margin-bottom: 24px; filter: brightness(0) invert(1);">
+              <img src="logo.png" width="240" height="60" alt="Granix Prime Stones - Trusted Globally" style="max-width: 100%; height: auto; max-height: 240px; margin-bottom: 24px; filter: brightness(0) invert(1);">
               <div style="color: #fff; margin-top: 20px;">
                 <p style="font-size: 2.5rem; font-weight: 700; margin: 0; line-height: 1; color: var(--accent);">15+</p>
                 <p style="margin: 8px 0 0; font-size: 1rem; opacity: 0.95;">Years of Excellence</p>
                 <hr style="border: none; border-top: 1px solid rgba(255,255,255,.3); margin: 20px 0;">
                 <p style="font-size: 2.5rem; font-weight: 700; margin: 0; line-height: 1; color: var(--accent);">25+</p>
                 <p style="margin: 8px 0 0; font-size: 1rem; opacity: 0.95;">Countries Served</p>
+                <hr style="border: none; border-top: 1px solid rgba(255,255,255,.3); margin: 20px 0;">
+                <p style="font-size: 2.5rem; font-weight: 700; margin: 0; line-height: 1; color: var(--accent);">500+</p>
+                <p style="margin: 8px 0 0; font-size: 1rem; opacity: 0.95;">Projects Completed</p>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- Team section for trust building -->
+    <section class="container section" style="padding: 64px 0; text-align: center;">
+      <h2 class="section-title">Meet Our Expert Team</h2>
+      <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7; margin-bottom: 48px; max-width: 700px; margin-left: auto; margin-right: auto;">Our team of stone artisans, designers, and project managers bring decades of experience to every project</p>
+      
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 32px; margin-bottom: 48px;">
+        <div class="card" style="text-align: center;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-600)); margin: 0 auto 20px; display: grid; place-items: center; font-size: 3rem; color: #fff;">👤</div>
+          <h3 style="margin: 0 0 8px; color: var(--brand);">John Granix</h3>
+          <p style="margin: 0 0 12px; color: var(--accent); font-weight: 600;">Founder & CEO</p>
+          <p style="margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6;">20+ years in stone quarrying and fabrication. Passionate about ethical sourcing and sustainable practices.</p>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-600)); margin: 0 auto 20px; display: grid; place-items: center; font-size: 3rem; color: #fff;">👤</div>
+          <h3 style="margin: 0 0 8px; color: var(--brand);">Sarah Mitchell</h3>
+          <p style="margin: 0 0 12px; color: var(--accent); font-weight: 600;">Design Director</p>
+          <p style="margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6;">Interior design expert specializing in luxury residential and commercial stone installations.</p>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-600)); margin: 0 auto 20px; display: grid; place-items: center; font-size: 3rem; color: #fff;">👤</div>
+          <h3 style="margin: 0 0 8px; color: var(--brand);">Michael Chen</h3>
+          <p style="margin: 0 0 12px; color: var(--accent); font-weight: 600;">Project Manager</p>
+          <p style="margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6;">Construction management specialist with expertise in large-scale commercial stone projects.</p>
+        </div>
+        
+        <div class="card" style="text-align: center;">
+          <div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, var(--brand), var(--brand-600)); margin: 0 auto 20px; display: grid; place-items: center; font-size: 3rem; color: #fff;">👤</div>
+          <h3 style="margin: 0 0 8px; color: var(--brand);">Amina Okafor</h3>
+          <p style="margin: 0 0 12px; color: var(--accent); font-weight: 600;">Quality Assurance</p>
+          <p style="margin: 0; color: var(--muted); font-size: 0.95rem; line-height: 1.6;">Certified stone inspector ensuring every slab meets our rigorous quality standards.</p>
+        </div>
+      </div>
+      
+      <div style="background: var(--bg-alt); padding: 32px; border-radius: var(--radius); border-left: 4px solid var(--accent); max-width: 800px; margin: 0 auto;">
+        <h3 style="margin: 0 0 16px; color: var(--brand);">Our Commitment to Excellence</h3>
+        <p style="margin: 0 0 24px; color: var(--text); line-height: 1.7; font-size: 1.05rem;">Every member of our team is committed to delivering exceptional service and quality. We believe that building trust through transparency and expertise is the foundation of lasting partnerships with our clients.</p>
+        <a href="about.html" class="btn">Learn More About Our Team</a>
       </div>
     </section>
 
@@ -253,23 +422,30 @@
         <article class="card">
           <h3>Products</h3>
           <p>Granite slabs and tiles, marble slabs, and engineered quartz for countertops, floors, and walls.</p>
-          <a class="card-link" href="products.html#granite">Explore our collection</a>
+          <a class="card-link" href="products.html#granite">Explore our collection →</a>
         </article>
         <article class="card">
           <h3>Services</h3>
           <p>Supply, precision fabrication, professional installation, and custom stone solutions.</p>
-          <a class="card-link" href="products.html#services">Discover our services</a>
+          <a class="card-link" href="products.html#services">Discover our services →</a>
         </article>
         <article class="card">
           <h3>Applications</h3>
           <p>Kitchens, bathrooms, floor tiles, wall cladding, staircases, walkways, and monuments.</p>
-          <a class="card-link" href="applications.html">View applications</a>
+          <a class="card-link" href="applications.html">View applications →</a>
         </article>
         <article class="card">
           <h3>Quality & Sourcing</h3>
           <p>Natural, durable stones with sustainable procurement and rigorous quality assurance.</p>
-          <a class="card-link" href="about.html#quality">Our standards</a>
+          <a class="card-link" href="about.html#quality">Our standards →</a>
         </article>
+        
+        <div style="grid-column: 1 / -1; text-align: center; margin-top: 24px;">
+          <a href="products.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 8px;">
+            <span>View Complete Product Catalog</span>
+            <span>→</span>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -314,6 +490,74 @@
             <span>Residential Developer, Kampala</span>
           </div>
         </article>
+        <!-- Additional testimonial for more social proof -->
+        <article class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"For our high-end residential projects, only Granix will do. Each slab tells a story, and their ethical sourcing gives our clients confidence in their investment. The quality is consistently exceptional."</p>
+          <div class="testimonial-author">
+            <strong>Michael T.</strong>
+            <span>Luxury Home Builder, Nairobi</span>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Granix transformed our commercial space with stunning quartz installations. Their attention to detail and professionalism throughout the process made them an invaluable partner. The final result exceeded our expectations."</p>
+          <div class="testimonial-author">
+            <strong>Rebecca L.</strong>
+            <span>Corporate Office Design, London</span>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"The natural stone from Granix has transformed our flagship store in Milan. The unique veining and premium quality have elevated our brand presentation. Their team's expertise in stone selection was invaluable."</p>
+          <div class="testimonial-author">
+            <strong>Antonio R.</strong>
+            <span>Luxury Retail Brand, Milan</span>
+          </div>
+        </article>
+        <article class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"We've worked with Granix on multiple hospitality projects across the Middle East. Their consistency in quality and service is remarkable. The stone installations have become a talking point for our guests."</p>
+          <div class="testimonial-author">
+            <strong>Fatima A.</strong>
+            <span>International Hotel Chain, Abu Dhabi</span>
+          </div>
+        </article>
+      </div>
+      
+      <div style="text-align: center; margin-top: 48px;">
+        <a href="#" class="btn" style="display: inline-flex; align-items: center; gap: 8px;">
+          <span>View All Testimonials</span>
+          <span>→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- Client logos section for additional social proof -->
+    <section class="container section" style="padding: 48px 0; text-align: center;">
+      <h2 class="section-title" style="text-align: center; margin-bottom: 32px;">Projects Featured In</h2>
+      <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7; margin-bottom: 48px; max-width: 700px; margin-left: auto; margin-right: auto;">Our stone installations have been featured in prestigious projects across continents</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 32px; align-items: center;">
+        <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+          <div style="height: 60px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: 700; color: var(--brand); font-size: 1.25rem;">Dubai Hotel</span>
+          </div>
+        </div>
+        <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+          <div style="height: 60px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: 700; color: var(--brand); font-size: 1.25rem;">Kampala Residences</span>
+          </div>
+        </div>
+        <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+          <div style="height: 60px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: 700; color: var(--brand); font-size: 1.25rem;">London Offices</span>
+          </div>
+        </div>
+        <div style="background: var(--bg); padding: 24px; border-radius: 12px; box-shadow: var(--shadow); border: 1px solid var(--border);">
+          <div style="height: 60px; display: flex; align-items: center; justify-content: center;">
+            <span style="font-weight: 700; color: var(--brand); font-size: 1.25rem;">Nairobi Complex</span>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -323,18 +567,137 @@
         <div class="cert-badge">
           <div class="cert-icon">🏆</div>
           <div class="cert-name">ISO 9001 Certified</div>
+          <div class="cert-desc">Quality Management Systems</div>
         </div>
         <div class="cert-badge">
           <div class="cert-icon">✓</div>
           <div class="cert-name">Quality Assured</div>
+          <div class="cert-desc">Rigorous Inspection Standards</div>
         </div>
         <div class="cert-badge">
           <div class="cert-icon">🌍</div>
           <div class="cert-name">Global Standards</div>
+          <div class="cert-desc">International Compliance</div>
         </div>
         <div class="cert-badge">
           <div class="cert-icon">♻️</div>
           <div class="cert-name">Eco-Friendly Sourcing</div>
+          <div class="cert-desc">Sustainable Practices</div>
+        </div>
+      </div>
+      
+      <div style="margin-top: 48px; padding: 32px; background: var(--bg); border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow);">
+        <h3 style="color: var(--brand); margin-top: 0;">Our Commitment to Excellence</h3>
+        <p style="color: var(--muted); line-height: 1.7; margin-bottom: 24px;">Every stone we source and every project we complete is guided by our unwavering commitment to quality, sustainability, and ethical practices.</p>
+        <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+          <div style="text-align: center; padding: 20px; background: var(--bg-alt); border-radius: 8px; min-width: 150px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">🛡️</div>
+            <div style="font-weight: 600; color: var(--brand);">100% Traceable</div>
+            <div style="font-size: 0.9rem; color: var(--muted);">Stone Origins</div>
+          </div>
+          <div style="text-align: center; padding: 20px; background: var(--bg-alt); border-radius: 8px; min-width: 150px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">📏</div>
+            <div style="font-weight: 600; color: var(--brand);">Precision</div>
+            <div style="font-size: 0.9rem; color: var(--muted);">±0.5mm Tolerance</div>
+          </div>
+          <div style="text-align: center; padding: 20px; background: var(--bg-alt); border-radius: 8px; min-width: 150px;">
+            <div style="font-size: 2rem; margin-bottom: 12px;">⏱️</div>
+            <div style="font-weight: 600; color: var(--brand);">On-Time</div>
+            <div style="font-size: 0.9rem; color: var(--muted);">Delivery Guarantee</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio showcase section -->
+    <section class="container section" style="padding: 64px 0; background: var(--bg-alt); border-radius: var(--radius); margin: 48px 0;">
+      <div style="text-align: center; max-width: 900px; margin: 0 auto 48px;">
+        <h2 class="section-title">Featured Projects</h2>
+        <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7; margin-bottom: 8px;">Explore our portfolio of iconic stone installations across the globe</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="card">
+          <div class="ratio-16x9">
+            <img loading="lazy" src="add 1.jpg" alt="Luxury hotel lobby marble installation in Dubai with premium finish">
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; color: var(--brand);">Dubai Luxury Hotel</h3>
+            <p style="margin: 0; color: var(--muted); line-height: 1.6;">Premium marble installation in high-traffic commercial space</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ratio-16x9">
+            <img loading="lazy" src="add 11.jpg" alt="Residential kitchen granite countertops in Kampala with custom edge design">
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; color: var(--brand);">Private Residence, Uganda</h3>
+            <p style="margin: 0; color: var(--muted); line-height: 1.6;">Custom granite kitchen countertops with waterfall edges</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="ratio-16x9">
+            <img loading="lazy" src="add 16.jpg" alt="Commercial office flooring in London with durable marble finish">
+          </div>
+          <div style="padding: 20px;">
+            <h3 style="margin: 0 0 12px; font-size: 1.25rem; color: var(--brand);">Corporate Office, UK</h3>
+            <p style="margin: 0; color: var(--muted); line-height: 1.6;">Large-scale marble flooring installation</p>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center; margin-top: 48px;">
+        <a class="btn btn-primary" href="gallery.html">View Full Portfolio</a>
+      </div>
+    </section>
+
+    <!-- Clear CTA section -->
+    <section class="container section" style="padding: 72px 0; text-align: center; background: linear-gradient(135deg, var(--brand), var(--brand-600)); color: #fff; border-radius: var(--radius); margin: 48px 0;">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <h2 class="section-title" style="color: #fff; margin-bottom: 24px;">Ready to Transform Your Space?</h2>
+        <p style="font-size: 1.25rem; margin-bottom: 32px; opacity: 0.95; line-height: 1.7;">Schedule a complimentary consultation with our stone experts to explore the perfect natural stone solution for your project.</p>
+        <div style="display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-bottom: 32px;">
+          <a class="btn btn-primary" href="contact.html" style="background: #fff; color: var(--brand); border-color: #fff;">Request Free Consultation</a>
+          <a class="btn" href="products.html" style="background: transparent; color: #fff; border-color: rgba(255,255,255,.5);">Explore Stone Collection</a>
+        </div>
+        <p style="font-size: 1rem; opacity: 0.85; margin: 0;">Or call us at <a href="tel:+256708331185" style="color: var(--accent); text-decoration: none;">+256 708 331 185</a> or <a href="tel:+971581968890" style="color: var(--accent); text-decoration: none;">+971 58 196 8890</a></p>
+      </div>
+    </section>
+
+    <!-- Downloadable content section -->
+    <section class="container section" style="padding: 64px 0; text-align: center;">
+      <div style="max-width: 800px; margin: 0 auto;">
+        <h2 class="section-title">Download Our Resources</h2>
+        <p style="font-size: 1.15rem; color: var(--muted); line-height: 1.7; margin-bottom: 48px;">Access our premium resources to help you make informed decisions about your stone selection</p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 24px; margin-bottom: 48px;">
+          <div class="card" style="text-align: center;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2rem; color: #fff;">📄</div>
+            <h3 style="margin: 0 0 16px; color: var(--brand);">Stone Selection Guide</h3>
+            <p style="margin: 0 0 24px; color: var(--muted); line-height: 1.6;">Comprehensive guide to choosing the right natural stone for your project</p>
+            <a href="exports/stone-selection-guide.pdf" class="btn" style="display: inline-block;">Download PDF</a>
+          </div>
+          
+          <div class="card" style="text-align: center;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2rem; color: #fff;">🏢</div>
+            <h3 style="margin: 0 0 16px; color: var(--brand);">Project Portfolio</h3>
+            <p style="margin: 0 0 24px; color: var(--muted); line-height: 1.6;">Showcase of our most iconic installations across the globe</p>
+            <a href="exports/project-portfolio.pdf" class="btn" style="display: inline-block;">Download PDF</a>
+          </div>
+          
+          <div class="card" style="text-align: center;">
+            <div style="width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(135deg, var(--brand), var(--brand-600)); border-radius: 50%; display: grid; place-items: center; font-size: 2rem; color: #fff;">📋</div>
+            <h3 style="margin: 0 0 16px; color: var(--brand);">Care & Maintenance</h3>
+            <p style="margin: 0 0 24px; color: var(--muted); line-height: 1.6;">Expert tips for maintaining the beauty of your natural stone</p>
+            <a href="exports/care-maintenance-guide.pdf" class="btn" style="display: inline-block;">Download PDF</a>
+          </div>
+        </div>
+        
+        <div style="background: var(--bg-alt); padding: 32px; border-radius: var(--radius); border-left: 4px solid var(--accent);">
+          <h3 style="margin: 0 0 16px; color: var(--brand);">Stay Updated</h3>
+          <p style="margin: 0 0 24px; color: var(--muted); line-height: 1.6; font-size: 1.1rem;">Subscribe to our newsletter for the latest stone trends, project features, and exclusive offers.</p>
+          <form style="display: flex; max-width: 500px; margin: 0 auto; gap: 12px;">
+            <input type="email" placeholder="Your email address" style="flex: 1; padding: 12px; border: 1px solid var(--border); border-radius: 8px; font-size: 1rem;">
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
         </div>
       </div>
     </section>
@@ -377,5 +740,30 @@
   </button>
 
   <script src="assets/js/main.js"></script>
+  
+  <!-- WhatsApp Chat Widget -->
+  <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+  <div class="elfsight-app-UNIQUE-ID"></div>
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  
+  <!-- Hotjar Tracking Code -->
+  <script>
+    (function(h,o,t,j,a,r){
+      h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+      h._hjSettings={hjid:HOTJAR_ID,hjsv:6};
+      a=o.getElementsByTagName('head')[0];
+      r=o.createElement('script');r.async=1;
+      r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+      a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+  </script>
 </body>
 </html>
